@@ -1,0 +1,180 @@
+/**
+ * Horizon theme: services grid section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ services section
+ * (1-col mobile, 2-col tablet `col-md-6` at 768px, 3-col desktop `col-lg-4` at 992px).
+ */
+
+/* View header area ("What We Do" + intro), pasted as plain <h2>/<p> via the
+ * Views UI — styled generically since it has no custom classes to hook. */
+.services header {
+  padding-bottom: 48px;
+}
+
+.services header h2 {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 24px 0 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.services header h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .services header h2 {
+    font-size: 32px;
+  }
+}
+
+.services header p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .services header {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .services header h2 {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+    margin-top: 0;
+  }
+
+  .services header p {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.services-grid .views-row {
+  height: 100%;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px;
+  background-color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 90%);
+  transition: transform 0.3s ease-out, border-color 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.service-item:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--horizon-text), transparent 78%);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.06);
+}
+
+.service-item .item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.service-item__icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  color: var(--horizon-accent);
+}
+
+.service-item__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.service-item .index {
+  font-family: var(--horizon-nav-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--horizon-text), transparent 60%);
+}
+
+.service-item h4 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+.service-item h4 a {
+  color: var(--horizon-heading);
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+
+.service-item h4 a:hover {
+  color: var(--horizon-accent);
+}
+
+.service-item .field--name-field-body,
+.service-item p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--horizon-text), transparent 25%);
+  margin-bottom: 24px;
+}
+
+.service-item .read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-family: var(--horizon-nav-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--horizon-heading);
+  text-decoration: none;
+}
+
+.service-item .read-more__icon {
+  color: var(--horizon-accent);
+  transition: transform 0.3s ease-out;
+}
+
+.service-item .read-more:hover {
+  color: var(--horizon-accent);
+}
+
+.service-item .read-more:hover .read-more__icon {
+  transform: translateX(4px);
+}

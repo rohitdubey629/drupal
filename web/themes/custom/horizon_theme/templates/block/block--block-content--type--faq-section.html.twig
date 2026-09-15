@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Theme override for the "FAQ Section" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--faq-section.html.twig, since the
+ * block_content bundle is "faq_section") — no conditional needed.
+ *
+ * `section` is the raw block_content entity (content['#block_content']),
+ * and each FAQ Item paragraph in `field_faq_items` is looped directly here
+ * (via `item.entity`) instead of going through
+ * field--field-faq-items.html.twig + paragraph--faq-item.html.twig — same
+ * technique as the Contact Section's info items. The native
+ * <details>/<summary> accordion stays the same (no JS needed to
+ * open/close); js/script.js only opens the first item by default.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set faq_items = section.field_faq_items %}
+{% set intro_link = section.field_faq_intro_link.0 %}
+
+<div{{ attributes }}>
+
+  <div class="container section-title">
+    <h2 class="faq-title">{{ section.field_faq_section_title.value }}</h2>
+    <p class="faq-section-intro">{{ section.field_faq_section_intro.value }}</p>
+  </div>
+
+  <div class="container">
+    <div class="faq-inner">
+
+      <div class="faq-intro">
+        <h3>{{ section.field_faq_intro_heading.value }}</h3>
+        <p>{{ section.field_faq_intro_text.value }}</p>
+        {% if intro_link %}
+          <div class="link-arrow">
+            <a href="{{ intro_link.getUrl().toString() }}">{{ intro_link.title }}</a>
+            <span class="link-arrow__icon" aria-hidden="true">&rarr;</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="faq-list">
+        {% for item in faq_items %}
+          {% set faq = item.entity %}
+          <details class="faq-item">
+            <summary>
+              {{ faq.field_faq_question.value }}
+              <span class="faq-item__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-item__answer">
+              {{ faq.field_faq_answer.value }}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+</div>

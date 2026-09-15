@@ -1,0 +1,259 @@
+/**
+ * Horizon theme: portfolio section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ portfolio section
+ * (1-col mobile, 2-col tablet `col-md-6` at 768px, 3-col desktop `col-lg-4`
+ * at 992px). Filtering is plain show/hide via js/script.js, built from the
+ * categories actually present in the markup — no Isotope.js dependency,
+ * so there's no animated re-flow when a filter is applied, just an
+ * instant, fully responsive show/hide.
+ */
+/* Section title/intro (Portfolio custom block), same pattern as
+ * About/Team/Pricing/FAQ's .section-title. The grid itself is a separate
+ * View block placed right after this one — see .portfolio-grid-wrap below. */
+.section-title .portfolio-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 24px 0 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.section-title .portfolio-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .section-title .portfolio-title {
+    font-size: 32px;
+  }
+}
+
+.section-title .portfolio-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .section-title:has(.portfolio-title) {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .section-title .portfolio-title {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+    margin-top: 0;
+  }
+
+  .section-title .portfolio-intro {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+/* The grid is a separate Views block sitting right under the title block
+ * above, so it skips the shared `.section` top padding (that lives on the
+ * title block already) and only needs its own bottom gap before the next
+ * section. */
+.portfolio-grid-wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 60px;
+}
+
+.portfolio-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 0 0 32px;
+}
+
+.portfolio-filters button {
+  background: none;
+  border: 0;
+  padding: 0 0 8px;
+  cursor: pointer;
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.portfolio-filters button:hover {
+  color: var(--horizon-heading);
+}
+
+.portfolio-filters button.is-active {
+  color: var(--horizon-heading);
+  border-bottom-color: var(--horizon-accent);
+}
+
+/* Masonry via CSS multi-column — each card keeps the source photo's own
+ * aspect ratio (portrait/landscape), so column heights vary naturally
+ * like the reference, without needing Isotope/Packery. */
+.portfolio-grid {
+  column-count: 1;
+  column-gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .portfolio-grid {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid {
+    column-count: 3;
+  }
+}
+
+.portfolio-grid .views-row {
+  break-inside: avoid;
+  margin-bottom: 24px;
+}
+
+.portfolio-grid .views-row[hidden] {
+  display: none;
+}
+
+.image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease-out;
+}
+
+.hover-actions {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.hover-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: var(--horizon-heading);
+  text-decoration: none;
+}
+
+.hover-actions__icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.hover-actions a:hover {
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+}
+
+.image-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.image-wrap:hover .hover-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-meta {
+  padding: 24px 0 8px;
+}
+
+.card-meta .category {
+  display: block;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+  margin-bottom: 8px;
+}
+
+.card-meta h4 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.card-meta h4 a {
+  color: var(--horizon-heading);
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+
+.card-meta h4 a:hover {
+  color: var(--horizon-accent);
+}
+
+/* Lightbox overlay (built by js/script.js, appended once to <body>). */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 5vw;
+  background-color: rgba(14, 14, 16, 0.9);
+}
+
+.lightbox-overlay.is-open {
+  display: flex;
+}
+
+.lightbox-overlay__image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-overlay__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-overlay__close:hover {
+  background-color: var(--horizon-accent);
+}

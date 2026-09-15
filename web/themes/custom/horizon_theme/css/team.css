@@ -1,0 +1,143 @@
+/**
+ * Horizon theme: team section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ team section
+ * (1-col mobile, 2-col tablet `col-md-6` at 768px, 4-col desktop `col-lg-3` at 992px).
+ */
+
+/* Section title row (reuses the same pattern as About/Services headers). */
+.team .section-title {
+  padding-bottom: 48px;
+}
+
+.team .section-title .team-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.team .section-title .team-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .team .section-title .team-title {
+    font-size: 32px;
+  }
+}
+
+.team .section-title .team-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .team .section-title {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .team .section-title .team-title {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+  }
+
+  .team .section-title .team-intro {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+/* Member grid. */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.team-member .member-photo {
+  overflow: hidden;
+}
+
+.team-member .member-photo img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.5s ease-out;
+}
+
+.team-member .member-photo:hover img {
+  transform: scale(1.05);
+}
+
+.team-member .member-info {
+  padding-top: 24px;
+}
+
+.team-member .member-info h4 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.team-member .member-info .role {
+  display: block;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+  margin-bottom: 16px;
+}
+
+.team-member .socials {
+  display: flex;
+  gap: 8px;
+}
+
+.team-member .socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 85%);
+  color: var(--horizon-text);
+  transition: background-color 0.3s ease-out, border-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.team-member .socials a svg {
+  width: 16px;
+  height: 16px;
+}
+
+.team-member .socials a:hover {
+  background-color: var(--horizon-accent);
+  border-color: var(--horizon-accent);
+  color: #ffffff;
+}

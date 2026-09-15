@@ -1,0 +1,87 @@
+/**
+ * Horizon theme: stats section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ stats section
+ * (col-lg-4 intro / col-lg-8 grid at 992px, col-md-6 stat pairs at 768px).
+ * Always on a dark background, so colors are hardcoded for contrast
+ * rather than pulled from the light-theme text variables.
+ */
+.stats-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .stats-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .stats-intro {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+
+  .stats-grid {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.stats-intro h2 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  max-width: 320px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .stats-intro h2 {
+    font-size: 28px;
+  }
+}
+
+.stats-intro p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 320px;
+  margin: 0;
+  color: color-mix(in srgb, #bfbfc6, transparent 20%);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 0 24px 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stat-item .number {
+  font-family: var(--horizon-nav-font);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--horizon-accent);
+}
+
+.stat-item .label {
+  font-size: 16px;
+  color: color-mix(in srgb, #bfbfc6, transparent 15%);
+}

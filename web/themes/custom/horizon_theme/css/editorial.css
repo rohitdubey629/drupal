@@ -1,0 +1,164 @@
+/**
+ * Horizon theme: editorial (blog cards) section.
+ * Mirrors the real washington.org "District Blog" section: a full-width
+ * header row (title/description/CTA), then a 2-column card grid below.
+ * Uses its own accent color (--editorial-accent) rather than the Horizon
+ * theme's orange — this component is sourced from a different reference
+ * site with its own brand color (a plum/wine tone), not the Horizon one.
+ */
+.editorial {
+  --editorial-accent: #6b1f4d;
+  background-color: #f2f1ef;
+}
+
+.editorial-details {
+  margin-bottom: 32px;
+}
+
+.editorial-label {
+  font-family: "Baloo 2", var(--horizon-nav-font), sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  color: var(--horizon-heading);
+}
+
+.editorial-details__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .editorial-details__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+}
+
+.editorial-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 760px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 15%);
+}
+
+.editorial-details .btn-outline {
+  flex-shrink: 0;
+}
+
+.editorial-details .btn-outline a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  white-space: nowrap;
+  border: 1px solid var(--editorial-accent);
+  border-radius: 2px;
+  background-color: transparent;
+  color: var(--editorial-accent);
+  font-family: var(--horizon-nav-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.editorial-details .btn-outline a:hover {
+  background-color: var(--editorial-accent);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Card grid. */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px 32px;
+}
+
+@media (min-width: 768px) {
+  .editorial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.editorial-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  /* Room below the image for the label box to overflow into. */
+  margin-bottom: 32px;
+}
+
+.editorial-card__image {
+  aspect-ratio: 560 / 208;
+  overflow: hidden;
+}
+
+.editorial-card__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Floating label box — sits right at the image's bottom-left corner,
+ * extending below it (no drop shadow, flush flat white box, matching the
+ * reference exactly — not the more elevated Hero-style floating badge).
+ * On hover, it slides up flush with the image's bottom edge instead of
+ * zooming the image. */
+.editorial-card__title {
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  max-width: calc(100% - 32px);
+  background-color: #ffffff;
+  transition: bottom 0.3s ease-out;
+}
+
+.editorial-card:hover .editorial-card__title {
+  bottom: 0;
+}
+
+.editorial-card:hover .editorial-card__title h3,
+.editorial-card:hover .editorial-card__icon {
+  color: #7d3269;
+}
+
+.editorial-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  color: var(--horizon-heading);
+}
+
+.editorial-card__icon svg,
+.editorial-card__icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.editorial-card__title h3 {
+  margin: 0;
+  font-family: "Baloo 2", var(--horizon-nav-font), sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--horizon-heading);
+}

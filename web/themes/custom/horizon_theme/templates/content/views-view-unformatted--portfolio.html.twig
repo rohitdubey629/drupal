@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Theme override for the "Portfolio" view's unformatted row list.
+ *
+ * Matched automatically via Drupal's view-name theme suggestion
+ * (views-view-unformatted--portfolio.html.twig) — no conditional needed.
+ * Adds the filter buttons (built from the categories actually present in
+ * `rows`, not a hardcoded list) and the .portfolio-grid wrapper. Filtering
+ * itself is plain show/hide via js/script.js — no Isotope.js dependency.
+ *
+ * Available variables: see core's views-view-unformatted.html.twig.
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+<div class="portfolio-filters" role="tablist">
+  <button type="button" class="is-active" data-filter="*">{{ 'All'|t }}</button>
+</div>
+
+<div class="portfolio-grid">
+  {% for row in rows %}
+    {%
+      set row_classes = [
+        default_row_class ? 'views-row',
+      ]
+    %}
+    <div{{ row.attributes.addClass(row_classes) }}>
+      {{- row.content -}}
+    </div>
+  {% endfor %}
+</div>

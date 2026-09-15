@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Theme override for the "Call To Action" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--call-to-action.html.twig, since the
+ * block_content bundle is "call_to_action") — no conditional needed.
+ *
+ * `cta` is the raw block_content entity (content['#block_content']), read
+ * directly for the plain fields — same technique as the Contact Section.
+ */
+#}
+{% set cta = content['#block_content'] %}
+{% set cta_link = cta.field_cta_link.0 %}
+
+<div{{ attributes }}>
+  <div class="container cta-wrap">
+    <span class="kicker">{{ cta.field_cta_kicker.value }}</span>
+    <h2>{{ cta.field_cta_header.value }}</h2>
+    <p>{{ cta.field_cra_description.value }}</p>
+    {% if cta_link %}
+      <div class="btn-pill">
+        <a href="{{ cta_link.getUrl().toString() }}">{{ cta_link.title }}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

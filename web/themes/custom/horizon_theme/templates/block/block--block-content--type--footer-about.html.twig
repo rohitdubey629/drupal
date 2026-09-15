@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Theme override for the "Footer About" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--footer-about.html.twig, since the
+ * block_content bundle is "footer_about") — no conditional needed.
+ *
+ * `about` is the raw block_content entity, read directly (same technique
+ * as Hero/Clients/Editorial). Social link icons aren't a separate field —
+ * each link's Title (e.g. "Instagram") is matched against a small keyword
+ * map to pick the right inline SVG, same fallback pattern used for the
+ * Editorial cards' icons.
+ *
+ * `content.site_name` is the real site name (Site Information config, same
+ * one shown in the header) — it's not a field on this block, so it's
+ * attached in horizon_theme_preprocess_block() the same way the Contact
+ * section's form is attached.
+ */
+#}
+{% set about = content['#block_content'] %}
+{% set site_name = content.site_name %}
+{% set description = about.field_footer_description.value %}
+{% set social_links = about.field_footer_social_links %}
+{% set social_icons = {
+  x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.6l-5.2-6.8L5.3 22H2.1l8.1-9.3L2 2h6.7l4.7 6.2L18.9 2zm-1.2 18h1.8L7.4 4h-1.9l12.2 16z"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
+  dribbble: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3.5 9.5c4 1.3 9 1.3 15.5-1M4.5 17c3-4.5 7-7 14-6.3M9 3.2c3 4 4.5 9.5 3.5 17.3"/></svg>',
+  linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM.24 8.25h4.5V23H.24V8.25zM8.5 8.25h4.3v2.02h.06c.6-1.1 2.05-2.26 4.22-2.26 4.5 0 5.33 2.96 5.33 6.8V23h-4.5v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.66 1.8-2.66 3.65V23H8.5V8.25z"/></svg>',
+} %}
+
+<div{{ attributes }}>
+  <a href="{{ path('<front>') }}" class="footer-about__logo">
+    <span class="sitename">{{ site_name }}<span class="dot">.</span></span>
+  </a>
+  <p class="footer-about__description">{{ description }}</p>
+  <div class="social-links">
+    {% for item in social_links %}
+      {% set icon_key = item.title|trim|lower|replace({' ': ''}) %}
+      {% set icon_url = item.getUrl().toString() %}
+      <a href="{{ icon_url }}" aria-label="{{ item.title }}" target="_blank" rel="noopener">
+        {{ (social_icons[icon_key]|default(''))|raw }}
+      </a>
+    {% endfor %}
+  </div>
+</div>

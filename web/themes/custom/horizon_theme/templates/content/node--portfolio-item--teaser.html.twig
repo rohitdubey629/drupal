@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme override for a "Portfolio Item" node in teaser view mode.
+ *
+ * Matched automatically via Drupal's content-type + view-mode suggestion
+ * (node--portfolio-item--teaser.html.twig) — no conditional needed.
+ *
+ * The category badge doubles as the client-side filter key (data-category),
+ * read by js/script.js — no Isotope.js dependency, just show/hide.
+ *
+ * The "+" icon opens the full image in an on-page lightbox (also built in
+ * js/script.js, class="js-lightbox") rather than navigating away — matches
+ * the reference's glightbox behavior without loading that library.
+ */
+#}
+{% set category = content.field_category.0|render|trim %}
+
+<article{{ attributes.addClass('portfolio-card').setAttribute('data-category', category) }}>
+  <div class="image-wrap">
+    {{ content.field_image }}
+    <div class="hover-actions">
+      <a href="{{ file_url(node.field_image.entity.field_media_image.entity.uri.value) }}" class="js-lightbox" data-title="{{ label }}" aria-label="{{ 'View full image'|t }}">
+        <span class="hover-actions__icon" aria-hidden="true">&#43;</span>
+      </a>
+      <a href="{{ url }}" aria-label="{{ 'Project details'|t }}">
+        <span class="hover-actions__icon" aria-hidden="true">&#8599;</span>
+      </a>
+    </div>
+  </div>
+  <div class="card-meta">
+    <span class="category">{{ category }}</span>
+    {% if label %}
+      <h4><a href="{{ url }}">{{ label }}</a></h4>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,203 @@
+/**
+ * Horizon theme: about section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ about section
+ * (two-column at 992px, Bootstrap's `lg` — col-lg-6/col-lg-6).
+ */
+
+/* Section title row: heading + intro paragraph. */
+.section-title {
+  padding-bottom: 48px;
+}
+
+.section-title .about-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.section-title .about-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .section-title .about-title {
+    font-size: 32px;
+  }
+}
+
+.section-title .about-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .section-title {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .section-title .about-title {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+  }
+
+  .section-title .about-intro {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+/* Two-column layout: image+badge, then content — stacked until 992px. */
+.about-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@media (min-width: 992px) {
+  .about-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about-inner .image-stack,
+  .about-inner .about-content {
+    flex: 0 0 50%;
+    max-width: 50%;
+    min-width: 0;
+  }
+}
+
+/* Image + experience badge */
+.image-stack {
+  position: relative;
+}
+
+.image-stack img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.experience-badge {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 152px;
+  padding: 24px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+}
+
+.experience-badge .number {
+  font-family: var(--horizon-nav-font);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.experience-badge .text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: color-mix(in srgb, #ffffff, transparent 15%);
+}
+
+/* Content column */
+.about-content .about-heading {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  max-width: 520px;
+  margin-bottom: 24px;
+}
+
+.about-content .about-description {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 520px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 25%);
+  margin-bottom: 32px;
+}
+
+.about-content .about-description p {
+  margin: 0;
+}
+
+.check-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+@media (max-width: 576px) {
+  .check-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--horizon-text);
+}
+
+.check-list__icon {
+  color: var(--horizon-accent);
+  font-size: 16px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.about-content .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-content .link-arrow a {
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--horizon-heading);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s ease-out;
+}
+
+.about-content .link-arrow a:hover {
+  background-size: 100% 1px;
+}
+
+.about-content .link-arrow__icon {
+  color: var(--horizon-accent);
+  transition: transform 0.3s ease-out;
+}
+
+.about-content .link-arrow:hover .link-arrow__icon {
+  transform: translateX(4px);
+}

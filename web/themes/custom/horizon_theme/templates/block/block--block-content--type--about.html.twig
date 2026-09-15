@@ -1,0 +1,79 @@
+{#
+/**
+ * @file
+ * Theme override for the "About" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--about.html.twig, since the block_content
+ * bundle is "about") — no conditional needed.
+ *
+ * `about` is the raw block_content entity (content['#block_content']),
+ * read directly for the plain fields — same technique as the Contact
+ * Section's info items. `field_checklist_item` (unlimited string field) is
+ * looped directly here instead of going through
+ * field--field-checklist-item.html.twig.
+ *
+ * `field_about_description` stays as a rendered field: it's a
+ * formatted-text field (has a text format like Basic HTML attached), and
+ * `content.field_about_description` is what runs it through Drupal's
+ * text-format filter — same reasoning as Hero's field_description.
+ *
+ * `field_about_image` is read directly (same technique as Hero/Clients)
+ * and built as a plain <img>, rather than through content.field_about_image
+ * — avoids the extra nested wrapper divs Drupal's default field output
+ * adds, and keeps this section consistent with the rest of the theme.
+ */
+#}
+{% set about = content['#block_content'] %}
+{% set about_media = about.field_about_image.entity %}
+{% set about_cta = about.field_about_cta_link.0 %}
+
+<div{{ attributes }}>
+
+  <div class="container section-title">
+    <h2 class="about-title">{{ about.field_section_title.value }}</h2>
+    <p class="about-intro">{{ about.field_section_intro.value }}</p>
+  </div>
+
+  <div class="container">
+    <div class="about-inner">
+
+      <div class="image-stack">
+        {% if about.field_about_image.target_id %}
+          <img
+            src="{{ file_url(about_media.field_media_image.entity.uri.value) }}"
+            alt="{{ about_media.field_media_image.0.alt }}"
+            loading="lazy"
+          >
+        {% endif %}
+        <div class="experience-badge">
+          <span class="number">{{ about.field_badge_number.value }}</span>
+          <span class="text">{{ about.field_badge_text.value }}</span>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <h3 class="about-heading">{{ about.field_about_heading.value }}</h3>
+        <div class="about-description">{{ content.field_about_description }}</div>
+
+        <ul class="check-list">
+          {% for check_item in about.field_checklist_item %}
+            <li>
+              <span class="check-list__icon" aria-hidden="true">&#10003;</span>
+              {{ check_item.value }}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if about_cta %}
+          <div class="link-arrow">
+            <a href="{{ about_cta.getUrl().toString() }}">{{ about_cta.title }}</a>
+            <span class="link-arrow__icon" aria-hidden="true">&rarr;</span>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>

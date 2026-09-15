@@ -1,0 +1,76 @@
+/**
+ * Horizon theme: content teaser cards (node--teaser.html.twig)
+ * displayed in a responsive grid (1 col mobile, 2 col tablet, 3 col desktop).
+ */
+.view-content,
+.node-listing {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--horizon-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(15, 28, 63, 0.12);
+  transform: translateY(-2px);
+}
+
+.card__media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.card__body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card__title {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.card__title a {
+  color: var(--horizon-heading);
+}
+
+.card__summary {
+  color: var(--horizon-text);
+  font-size: 0.9375rem;
+  flex: 1;
+}
+
+.card__link {
+  margin-top: 1rem;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+  .view-content,
+  .node-listing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 3 columns */
+@media (min-width: 992px) {
+  .view-content,
+  .node-listing {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}

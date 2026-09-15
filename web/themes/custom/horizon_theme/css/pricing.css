@@ -1,0 +1,203 @@
+/**
+ * Horizon theme: pricing section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ pricing section
+ * (1-col mobile, 3-col desktop `col-lg-4` at 992px; title row reuses the
+ * shared .section-title split pattern from about.css — the reference
+ * markup for this title is identical to About/Services/Team).
+ */
+.section-title .pricing-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.section-title .pricing-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .section-title .pricing-title {
+    font-size: 32px;
+  }
+}
+
+.section-title .pricing-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .section-title .pricing-title {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+  }
+
+  .section-title .pricing-intro {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+/* Card grid. */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+@media (min-width: 992px) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pricing-grid__item {
+  height: 100%;
+}
+
+/* Card. */
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 40px 32px;
+  background-color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 90%);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.06);
+}
+
+.pricing-card.featured {
+  border: 2px solid var(--horizon-accent);
+}
+
+.badge-popular {
+  position: absolute;
+  top: -14px;
+  left: 32px;
+  padding: 4px 16px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pricing-card .plan {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.pricing-card .blurb {
+  font-size: 14px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+  margin: 0 0 24px;
+}
+
+.pricing-card .price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid color-mix(in srgb, var(--horizon-text), transparent 90%);
+}
+
+.pricing-card .price .amount {
+  font-family: var(--horizon-nav-font);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--horizon-heading);
+}
+
+.pricing-card .price .period {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.feature-list__icon {
+  color: var(--horizon-accent);
+  font-size: 14px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.pricing-card .btn-pill {
+  margin-top: auto;
+}
+
+.pricing-card .btn-pill a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.pricing-card .btn-pill a:hover {
+  transform: translateY(-4px);
+  background-color: color-mix(in srgb, var(--horizon-accent) 90%, black);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.pricing-card .btn-pill.outline a {
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 60%);
+  color: var(--horizon-heading);
+}
+
+.pricing-card .btn-pill.outline a:hover {
+  transform: none;
+  border-color: var(--horizon-accent);
+  color: var(--horizon-accent);
+  background-color: transparent;
+}

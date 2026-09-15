@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for the "Client Logos" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--client-logos.html.twig, since the
+ * block_content bundle is "client_logos") — no conditional needed.
+ *
+ * `clients` is the raw block_content entity (content['#block_content']),
+ * read directly (same technique as the Hero section) so the logo grid can
+ * loop the unlimited Media field itself and build plain <img src="" alt="">
+ * tags — no separate field--field-client-logos.html.twig needed anymore,
+ * since the loop now happens here instead of in a field-level template.
+ */
+#}
+{% set clients = content['#block_content'] %}
+
+<div{{ attributes }}>
+  <div class="container clients-inner">
+    <p class="lead-in">{{ clients.field_lead_in.value }}</p>
+
+    <div class="logo-grid">
+      {% for logo_item in clients.field_client_logos %}
+        {% set media = logo_item.entity %}
+        {% if media %}
+          <div class="logo-item">
+            <img
+              src="{{ file_url(media.field_media_image.entity.uri.value) }}"
+              alt="{{ media.field_media_image.0.alt }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

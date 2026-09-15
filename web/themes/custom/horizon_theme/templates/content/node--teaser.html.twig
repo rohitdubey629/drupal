@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override for a node teaser, styled as a Horizon-style card.
+ *
+ * Matched via Drupal's default view-mode suggestion (node--teaser.html.twig)
+ * — no manual view_mode check required, Drupal picks this file automatically
+ * whenever a node renders in the "teaser" view mode.
+ *
+ * Available variables: see node.html.twig.
+ */
+#}
+<article{{ attributes.addClass('card') }}>
+  {% if content.field_image %}
+    <div class="card__media">
+      {{ content.field_image }}
+    </div>
+  {% endif %}
+
+  <div class="card__body">
+    {{ title_prefix }}
+    {% if label %}
+      <h3 class="card__title"{{ title_attributes }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h3>
+    {% endif %}
+    {{ title_suffix }}
+
+    <div class="card__summary"{{ content_attributes }}>
+      {{ content|without('field_image') }}
+    </div>
+
+    <a href="{{ url }}" class="card__link">{{ 'Read more'|t }}</a>
+  </div>
+</article>

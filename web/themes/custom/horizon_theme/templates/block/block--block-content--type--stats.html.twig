@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Theme override for the "Stats" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--stats.html.twig, since the block_content
+ * bundle is "stats") — no conditional needed.
+ *
+ * `section` is the raw block_content entity (content['#block_content']),
+ * read directly for the plain fields — same technique as the Contact
+ * Section.
+ */
+#}
+{% set section = content['#block_content'] %}
+
+<div{{ attributes }}>
+  <div class="container stats-inner">
+
+    <div class="stats-intro">
+      <h2>{{ section.field_stats_heading.value }}</h2>
+      <p>{{ section.field_stats_intro.value }}</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="number">{{ section.field_stat_1_value.value }}</span>
+        <span class="label">{{ section.field_stat_1_label.value }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">{{ section.field_stat_2_value.value }}</span>
+        <span class="label">{{ section.field_stat_2_label.value }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">{{ section.field_stat_3_value.value }}</span>
+        <span class="label">{{ section.field_stat_3_label.value }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">{{ section.field_stat_4_value.value }}</span>
+        <span class="label">{{ section.field_stat_4_label.value }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

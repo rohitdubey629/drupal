@@ -1,0 +1,78 @@
+/**
+ * Horizon theme: page-level layout (site-wrapper, main content + sidebar grid).
+ */
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Shared section scaffolding (reused by hero, clients, and every future
+ * landing-page section — about, services, portfolio, etc.). */
+.section {
+  padding: 60px 0;
+}
+
+.light-background {
+  background-color: var(--horizon-light-bg);
+}
+
+.dark-background {
+  background-color: #0e0e10;
+  color: #bfbfc6;
+}
+
+.site-main {
+  flex: 1 0 auto;
+  padding: 2rem 0;
+}
+
+.site-main__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.site-main__content {
+  min-width: 0;
+}
+
+.site-main__sidebar {
+  min-width: 0;
+}
+
+.breadcrumb-wrapper {
+  padding: 1rem var(--gutter);
+  font-size: 0.875rem;
+}
+
+.highlighted-messages {
+  padding-top: 1rem;
+}
+
+/* Tablet: sidebar sits beside content */
+@media (min-width: 768px) {
+  .site-main__inner:has(.site-main__sidebar) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .site-main__content {
+    flex: 1 1 auto;
+  }
+
+  .site-main__sidebar {
+    flex: 0 0 280px;
+  }
+}
+
+/* Desktop: more breathing room */
+@media (min-width: 992px) {
+  .site-main {
+    padding: 3rem 0;
+  }
+
+  .site-main__inner {
+    gap: 3rem;
+  }
+}

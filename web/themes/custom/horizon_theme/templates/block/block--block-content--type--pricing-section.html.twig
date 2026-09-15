@@ -1,0 +1,67 @@
+{#
+/**
+ * @file
+ * Theme override for the "Pricing Section" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--pricing-section.html.twig, since the
+ * block_content bundle is "pricing_section") — no conditional needed.
+ *
+ * `section` is the raw block_content entity (content['#block_content']),
+ * and each Pricing Plan paragraph in `field_pricing_plans` is looped
+ * directly here (via `item.entity`) instead of going through
+ * field--field-pricing-plans.html.twig + paragraph--pricing-plan.html.twig
+ * — same technique as the Contact Section's info items.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set plans = section.field_pricing_plans %}
+
+<div{{ attributes }}>
+
+  <div class="container section-title">
+    <h2 class="pricing-title">{{ section.field_pricing_section_title.value }}</h2>
+    <p class="pricing-intro">{{ section.field_pricing_section_intro.value }}</p>
+  </div>
+
+  <div class="container">
+    <div class="pricing-grid">
+      {% for item in plans %}
+        {% set plan = item.entity %}
+        {% set is_featured = plan.field_featured.value %}
+        {% set cta = plan.field_cta.0 %}
+        <div class="pricing-grid__item">
+          <div class="pricing-card{{ is_featured ? ' featured' }}">
+            {% if is_featured %}
+              <span class="badge-popular">{{ 'Most Popular'|t }}</span>
+            {% endif %}
+
+            <h4 class="plan">{{ plan.field_plan_name.value }}</h4>
+            <p class="blurb">{{ plan.field_blurb.value }}</p>
+
+            <div class="price">
+              <span class="amount">{{ plan.field_price.value }}</span>
+              <span class="period">{{ plan.field_period.value }}</span>
+            </div>
+
+            <ul class="feature-list">
+              {% for feature in plan.field_feature %}
+                <li>
+                  <span class="feature-list__icon" aria-hidden="true">&#10003;</span>
+                  {{ feature.value }}
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% if cta %}
+              <div class="btn-pill{{ is_featured ? '' : ' outline' }}">
+                <a href="{{ cta.getUrl().toString() }}">{{ cta.title }}</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>

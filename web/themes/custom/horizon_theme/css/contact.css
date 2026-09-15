@@ -1,0 +1,205 @@
+/**
+ * Horizon theme: contact section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ contact section
+ * (col-lg-5 info / col-lg-7 form at 992px). The form itself is the
+ * "Contact Form" Webform (machine name `contact_form`), not static markup —
+ * these selectors target Drupal's own form-element classes, which Webform
+ * elements share since they're still built on the Form API.
+ */
+.section-title .contact-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  position: relative;
+  padding-top: 24px;
+}
+
+.section-title .contact-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .section-title .contact-title {
+    font-size: 32px;
+  }
+}
+
+.section-title .contact-section-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (min-width: 992px) {
+  .section-title .contact-title {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+  }
+
+  .section-title .contact-section-intro {
+    flex: 1 1 auto;
+    margin: 0;
+    padding-left: 32px;
+    border-left: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  }
+}
+
+/* Two-column layout: info list, then the form. */
+.contact-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .contact-inner {
+    flex-direction: row;
+    gap: 3rem;
+  }
+
+  .contact-info {
+    flex: 0 0 41.6667%;
+    max-width: 41.6667%;
+  }
+
+  .contact-form-wrap {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* Info items. */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.info-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--horizon-accent), transparent 90%);
+  color: var(--horizon-accent);
+}
+
+.info-item__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.info-text h5 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.info-text p {
+  font-size: 16px;
+  margin: 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 25%);
+}
+
+/* Drupal's contact form — target its own form-element classes. */
+.contact-form-wrap form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .contact-form-wrap form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-form-wrap .form-item-subject,
+  .contact-form-wrap .form-item-message,
+  .contact-form-wrap .form-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+.contact-form-wrap label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.contact-form-wrap .form-text,
+.contact-form-wrap .form-email,
+.contact-form-wrap .form-textarea {
+  width: 100%;
+  color: var(--horizon-text);
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 12px 16px;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 80%);
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color 0.3s ease-out;
+}
+
+.contact-form-wrap .form-text:focus,
+.contact-form-wrap .form-email:focus,
+.contact-form-wrap .form-textarea:focus {
+  outline: none;
+  border-color: var(--horizon-accent);
+}
+
+.contact-form-wrap .form-text::placeholder,
+.contact-form-wrap .form-email::placeholder,
+.contact-form-wrap .form-textarea::placeholder {
+  color: color-mix(in srgb, var(--horizon-text), transparent 70%);
+}
+
+.contact-form-wrap .form-text,
+.contact-form-wrap .form-email {
+  height: 48px;
+}
+
+.contact-form-wrap .form-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.contact-form-wrap .form-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  border: 0;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.contact-form-wrap .form-submit:hover {
+  transform: translateY(-4px);
+  background-color: color-mix(in srgb, var(--horizon-accent) 90%, black);
+}

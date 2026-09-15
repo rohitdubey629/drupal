@@ -1,0 +1,38 @@
+global-styling:
+  version: 1.x
+  css:
+    base:
+      css/base.css: {}
+    layout:
+      css/layout.css: {}
+    component:
+      css/header.css: {}
+      css/hero.css: {}
+      css/clients.css: {}
+      css/about.css: {}
+      css/services.css: {}
+      css/cta.css: {}
+      css/stats.css: {}
+      css/team.css: {}
+      css/testimonials.css: {}
+      css/pricing.css: {}
+      css/faq.css: {}
+      css/contact.css: {}
+      css/portfolio.css: {}
+      css/editorial.css: {}
+      css/cards.css: {}
+      css/footer.css: {}
+      css/navigation.css: {}
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - horizon_theme/editorial-font
+
+editorial-font:
+  version: 1.x
+  css:
+    theme:
+      https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap: { type: external }

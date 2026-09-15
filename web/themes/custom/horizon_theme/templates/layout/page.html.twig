@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * Horizon theme override to display a single page.
+ *
+ * The theme only declares three regions:
+ * - page.header: Site branding, navigation, header CTA.
+ * - page.content: Every landing-page section (hero, about, services,
+ *   portfolio, stats, team, testimonials, pricing, faq, contact,
+ *   editorial, ...), each placed here as its own block, in the order
+ *   they should appear. Each block supplies its own section id/class
+ *   (see horizon_theme_preprocess_block()) since there's no longer a
+ *   dedicated region per section to hang that on.
+ * - page.footer: Footer columns + copyright bar.
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+<div class="site-wrapper">
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="site-header__inner">
+        {{ page.header }}
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    {{ page.content }}
+  </main>
+
+  {% if page.footer %}
+    <footer id="footer" class="footer dark-background">
+      <div class="container footer-top">
+        {{ page.footer }}
+      </div>
+    </footer>
+  {% endif %}
+</div>{# /.site-wrapper #}
+
+{#
+  Scroll-to-top button: fixed to the viewport (not the .site-wrapper flow),
+  so it lives outside that wrapper here. Shown/hidden by scroll position via
+  the `.active` class toggled in script.js.
+#}
+<a href="#" id="scroll-top" class="scroll-top" aria-label="{{ 'Scroll to top'|t }}">
+  <span aria-hidden="true">&uarr;</span>
+</a>

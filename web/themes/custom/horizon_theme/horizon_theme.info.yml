@@ -1,0 +1,13 @@
+name: Horizon Theme
+type: theme
+description: 'Custom theme based on the Horizon Bootstrap template design.'
+core_version_requirement: ^10 || ^11
+base theme: stable9
+
+libraries:
+  - horizon_theme/global-styling
+
+regions:
+  header: 'Header'
+  content: 'Content'
+  footer: 'Footer'

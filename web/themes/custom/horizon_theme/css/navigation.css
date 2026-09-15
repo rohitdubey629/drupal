@@ -1,0 +1,39 @@
+/**
+ * Horizon theme: secondary menu and breadcrumb navigation.
+ */
+.site-header__secondary {
+  background: var(--horizon-light-bg);
+  font-size: 0.8125rem;
+}
+
+.site-header__secondary ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem var(--gutter);
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.breadcrumb-wrapper ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  color: #8a8f9e;
+}
+
+.breadcrumb-wrapper li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.25rem;
+}
+
+/* Desktop: breadcrumb gets more left padding to align with container */
+@media (min-width: 992px) {
+  .breadcrumb-wrapper {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+}

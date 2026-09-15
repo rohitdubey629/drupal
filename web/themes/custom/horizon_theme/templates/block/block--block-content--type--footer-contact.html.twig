@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Theme override for the "Footer Contact" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--footer-contact.html.twig, since the
+ * block_content bundle is "footer_contact") — no conditional needed.
+ *
+ * `contact` is the raw block_content entity, read directly (same
+ * technique as Hero/Clients/Editorial).
+ *
+ * The "Get in Touch" heading isn't hardcoded here — it's this block's own
+ * configurable Title (Block layout → Configure → Block title), same as
+ * how the Explore/Services menu block titles work. That's why `label` is
+ * printed the normal block.html.twig way instead of a hardcoded string.
+ */
+#}
+{% set contact = content['#block_content'] %}
+{% set email = contact.field_email.value %}
+{% set phone = contact.field_footer_phone.value %}
+{% set address = contact.field_footer_address.value %}
+
+<div{{ attributes }}>
+  {{ title_prefix }}
+  {% if label %}
+    <h4{{ title_attributes.addClass('footer-contact__title') }}>{{ label }}</h4>
+  {% endif %}
+  {{ title_suffix }}
+  {% if email %}
+    <a href="mailto:{{ email }}" class="email-link">{{ email }}</a>
+  {% endif %}
+  {% if phone %}
+    <p class="phone">{{ phone }}</p>
+  {% endif %}
+  {% if address %}
+    {# CSS `white-space: pre-line` on `.address` preserves the line breaks
+       the editor typed, since `nl2br` isn't a Twig filter Drupal ships. #}
+    <p class="address">{{ address }}</p>
+  {% endif %}
+</div>

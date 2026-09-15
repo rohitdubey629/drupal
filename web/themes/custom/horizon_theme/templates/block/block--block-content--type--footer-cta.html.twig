@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Theme override for the "Footer CTA" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--footer-cta.html.twig, since the
+ * block_content bundle is "footer_cta") — no conditional needed.
+ *
+ * `cta` is the raw block_content entity (content['#block_content']), read
+ * directly (same technique as Hero/Clients/Editorial) for plain fields.
+ */
+#}
+{% set cta = content['#block_content'] %}
+{% set heading = cta.field_footer_heading.value %}
+{% set cta_link = cta.field_footer_cta_link.0 %}
+{% set cta_url = cta_link ? cta_link.getUrl().toString() : '' %}
+{% set cta_title = cta_link ? cta_link.title : '' %}
+
+<div{{ attributes }}>
+  <div class="footer-cta__row">
+    <h2 class="footer-cta__heading">{{ heading }}</h2>
+    {% if cta_link %}
+      <a href="{{ cta_url }}" class="btn-pill">
+        {{ cta_title }}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    {% endif %}
+  </div>
+</div>

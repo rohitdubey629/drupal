@@ -1,0 +1,211 @@
+/**
+ * Horizon theme: site footer.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ footer: a full-width CTA
+ * row, a 4-column row (About / Explore / Services / Contact), then a
+ * copyright bar. All 6 blocks live in one `footer` region — the layout
+ * below is done purely with CSS Grid on that region, not extra markup.
+ */
+.footer {
+  background-color: var(--horizon-heading, #14183e);
+  color: color-mix(in srgb, #ffffff, transparent 25%);
+  padding-top: 64px;
+}
+
+.footer a {
+  color: inherit;
+}
+
+/* The region itself is the grid: CTA and Copyright span the full width,
+ * About/Explore/Services/Contact share the middle row. */
+.footer-top .region-footer {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  gap: 40px;
+  align-items: start;
+}
+
+#block-horizon-theme-footercta,
+#block-horizon-theme-footercopyright {
+  grid-column: 1 / -1;
+}
+
+/* CTA row. */
+#block-horizon-theme-footercta {
+  padding-bottom: 40px;
+  border-bottom: 1px solid color-mix(in srgb, #ffffff, transparent 88%);
+}
+
+.footer-cta__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-cta__heading {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footer-cta__row .btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease-out;
+}
+
+.footer-cta__row .btn-pill:hover {
+  transform: translateY(-2px);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* About column. */
+.footer-about__logo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+  font-family: var(--horizon-nav-font);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-about__logo .dot {
+  color: var(--horizon-accent);
+}
+
+.footer-about__description {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, #ffffff, transparent 92%);
+  transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.social-links a:hover {
+  background-color: var(--horizon-accent);
+  transform: translateY(-2px);
+}
+
+.social-links svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Explore / Services menu columns. */
+.footer-top nav h2 {
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footer-top nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-top nav a {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer-top nav a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Contact column. */
+.footer-contact__title {
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footer-contact__title ~ .email-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer-contact__title ~ .email-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+#block-horizon-theme-footercontact .phone,
+#block-horizon-theme-footercontact .address {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* Copyright bar. */
+#block-horizon-theme-footercopyright {
+  margin-top: 40px;
+  padding: 24px 0;
+  border-top: 1px solid color-mix(in srgb, #ffffff, transparent 88%);
+  text-align: center;
+}
+
+.copyright-text {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* Mobile/tablet: stack everything into one column. */
+@media (max-width: 991px) {
+  .footer-top .region-footer {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  #block-horizon-theme-footercta,
+  #block-horizon-theme-footerabout,
+  #block-horizon-theme-footerexploremenu,
+  #block-horizon-theme-footerservicesmenu,
+  #block-horizon-theme-footercontact,
+  #block-horizon-theme-footercopyright {
+    grid-column: 1 / -1;
+  }
+
+  .footer-cta__row {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,95 @@
+{#
+/**
+ * @file
+ * Theme override for the "Editorial Section" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--editorial-section.html.twig, since the
+ * block_content bundle is "editorial_section") — no conditional needed.
+ *
+ * Layout matches the real washington.org "District Blog" section: the
+ * title sits on its own line, then description + CTA share one row
+ * (description left, button right) — not stacked, as first drafted.
+ * Card grid sits below.
+ *
+ * `section` is the raw block_content entity (content['#block_content']),
+ * read directly (same technique as Hero/Clients) for the plain fields.
+ * `field_section_description` is a plain long-text field (string_long, no
+ * text format attached) — unlike Hero's field_description, there's no
+ * filtering to bypass, so `.value` is safe here.
+ * `field_editorial_cards` (unlimited Paragraph reference) is looped
+ * directly here (via `item.entity`) instead of going through
+ * field--field-editorial-cards.html.twig + paragraph--editorial-card.html.twig
+ * — same technique as the Contact Section's info items.
+ *
+ * Icons: if an editor uploads a "Card Icon" media image, that's used;
+ * otherwise this falls back to a matching inline SVG doodle icon keyed by
+ * the card's label text, so the 4 known cards (Featured/Trending/What's
+ * New/Places to Eat) always show the right icon even before any icon media
+ * is uploaded.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set section_cta = section.field_section_cta.0 %}
+{% set cards = section.field_editorial_cards %}
+{% set label_icons = {
+  featured: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>',
+  trending: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 3-2 4-1 7 .6-1 1.3-1 2-.3 1 1 1.3 2.6.5 4a4.5 4.5 0 01-8.6-1.8C4.5 8.5 9 7 12 3z"/></svg>',
+  whatsnew: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1z"/><path d="M15 9a3 3 0 010 6M18 6a7 7 0 010 12"/></svg>',
+  placestoeat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2v9M7 3v7M9 3v7M11 3v7"/><path d="M17 3c-1.5 0-3 1.5-3 4s1 4 1 4v10"/></svg>',
+} %}
+
+<div{{ attributes }}>
+  <div class="container">
+
+    <div class="editorial-details">
+      <h2 class="editorial-label">{{ section.field_section_label.value }}</h2>
+      <div class="editorial-details__row">
+        <p class="editorial-description">{{ section.field_section_description.value }}</p>
+        {% if section_cta %}
+          <div class="btn-outline">
+            <a href="{{ section_cta.getUrl().toString() }}">{{ section_cta.title }}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="editorial-grid">
+      {% for item in cards %}
+        {% set card = item.entity %}
+        {% set label_key = card.field_card_label.value|lower|replace({"'": '', ' ': '', '&#039;': '', '&#39;': ''}) %}
+        {% set card_url = card.field_card_link.0.getUrl().toString() %}
+        {% set card_media = card.field_card_image.entity %}
+        {% set icon_media = card.field_card_icon.entity %}
+        <div class="editorial-grid__item">
+          <a href="{{ card_url }}" class="editorial-card" target="_blank" rel="noopener" aria-label="{{ card.field_card_label.value }}">
+            <div class="editorial-card__image">
+              {% if card.field_card_image.target_id %}
+                <img
+                  src="{{ file_url(card_media.field_media_image.entity.uri.value) }}"
+                  alt="{{ card_media.field_media_image.0.alt }}"
+                  loading="lazy"
+                >
+              {% endif %}
+            </div>
+            <div class="editorial-card__title">
+              <span class="editorial-card__icon">
+                {% if card.field_card_icon.target_id %}
+                  <img
+                    src="{{ file_url(icon_media.field_media_image.entity.uri.value) }}"
+                    alt=""
+                    loading="lazy"
+                  >
+                {% else %}
+                  {{ (label_icons[label_key]|default(''))|raw }}
+                {% endif %}
+              </span>
+              <h3>{{ card.field_card_label.value }}</h3>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>

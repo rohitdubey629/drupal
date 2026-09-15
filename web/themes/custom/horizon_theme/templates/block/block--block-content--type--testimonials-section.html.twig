@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme override for the "Testimonials Section" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--testimonials-section.html.twig, since the
+ * block_content bundle is "testimonials_section") — no conditional needed.
+ *
+ * `section` is the raw block_content entity (content['#block_content']),
+ * and each Testimonial paragraph in `field_testimonials` is looped
+ * directly here (via `item.entity`) instead of going through
+ * field--field-testimonials.html.twig + paragraph--testimonial.html.twig —
+ * same technique as the Contact Section's info items. The carousel markup
+ * (native CSS scroll-snap, no JS library) stays the same; js/script.js
+ * still adds the dot indicators and click-to-scroll behavior.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set testimonials = section.field_testimonials %}
+
+<div{{ attributes }}>
+
+  <div class="container testimonials-header">
+    <h2 class="testimonials-title">{{ section.field_testimonials_section_title.value }}</h2>
+    <p class="testimonials-intro">{{ section.field_testimonials_section_intro.value }}</p>
+  </div>
+
+  <div class="container">
+    <div class="testimonials-carousel">
+      <div class="testimonials-track">
+        {% for item in testimonials %}
+          {% set testimonial = item.entity %}
+          <div class="testimonials-track__slide">
+            <div class="testimonial-item">
+              <p class="quote">{{ testimonial.field_testimonial_quote.value }}</p>
+              <div class="avatar">
+                {% set avatar_media = testimonial.field_testimonial_avatar.entity %}
+                {% if testimonial.field_testimonial_avatar.target_id %}
+                  <img
+                    src="{{ file_url(avatar_media.field_media_image.entity.uri.value) }}"
+                    alt="{{ avatar_media.field_media_image.0.alt }}"
+                    loading="lazy"
+                  >
+                {% endif %}
+              </div>
+              <h5 class="name">{{ testimonial.field_testimonial_name.value }}</h5>
+              <span class="role">{{ testimonial.field_testimonial_role.value }}</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="testimonials-dots"></div>
+    </div>
+  </div>
+
+</div>

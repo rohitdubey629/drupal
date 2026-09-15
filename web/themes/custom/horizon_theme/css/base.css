@@ -1,0 +1,148 @@
+/**
+ * Horizon theme: base reset, typography, container, breakpoint variables.
+ * Breakpoints mirror Bootstrap's grid: 576 / 768 / 992 / 1200 / 1400.
+ */
+:root {
+  --horizon-primary: #2e4bfa;
+  --horizon-dark: #0f1c3f;
+  --horizon-text: #444444;
+  --horizon-heading: #1a1a1a;
+  --horizon-light-bg: #f4f3f0;
+  --horizon-border: #e5e7f0;
+  --container-max: 1320px;
+  --gutter: 1rem;
+
+  /* Header/nav accent — matches the Horizon reference template's brand color. */
+  --horizon-accent: #dd4814;
+  --horizon-nav-color: #54555a;
+  --horizon-nav-hover-color: #dd4814;
+  --horizon-nav-font: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Safety net: with this many components on one page (carousels, dropdown
+ * submenus, flex rows), a stray sub-pixel/flex-basis overflow is easy to
+ * introduce and hard to pin to one exact source. Clipping horizontally at
+ * the root prevents any one of those from adding a page-wide scrollbar,
+ * without affecting each component's own internal scrolling (e.g. the
+ * testimonials carousel still scrolls fine inside its own container).
+ *
+ * Uses `clip`, not `hidden`: `overflow-x: hidden` forces `overflow-y` to
+ * compute as `auto` (the CSS overflow-pairing rule), which turns html/body
+ * into their own scroll container — and `position: sticky` only sticks
+ * within its nearest scrolling ancestor, so the sticky header stuck to
+ * that broken container instead of the viewport and scrolled away. `clip`
+ * doesn't establish a scroll container, so it clips the same way without
+ * breaking sticky. */
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+/* Offsets anchor-scroll targets so the sticky header doesn't cover the
+ * top of the section on jump-to links (e.g. /#contact from the main menu). */
+section {
+  scroll-margin-top: 70px;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--horizon-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--horizon-heading);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.75rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--horizon-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Scroll-to-top button: fixed bottom-right, hidden until the page has
+ * scrolled past the hero (toggled via the `.active` class in script.js). */
+.scroll-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.2s ease-out;
+}
+
+.scroll-top.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-top:hover {
+  background-color: color-mix(in srgb, var(--horizon-accent) 85%, black);
+  color: #ffffff;
+  text-decoration: none;
+}

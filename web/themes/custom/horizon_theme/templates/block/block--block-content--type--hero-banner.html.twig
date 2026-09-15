@@ -1,0 +1,88 @@
+{#
+/**
+ * @file
+ * Theme override for the "Hero Banner" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--hero-banner.html.twig, since the
+ * block_content bundle is "hero_banner") — no conditional needed.
+ *
+ * `hero` is the raw block_content entity (content['#block_content']), used
+ * to pull plain field values directly instead of Drupal's field-formatter
+ * render arrays — same technique as the Team/Editorial sections' links.
+ *
+ * `field_description` is the one field NOT read this way: it's a
+ * formatted-text field (has a text format like Basic HTML attached), and
+ * `content.field_description` is what runs that value through Drupal's
+ * text-format filter (stripping disallowed tags, etc.). Reading `.value`
+ * directly would skip that filtering — a real risk for formatted text, so
+ * it stays as a rendered field.
+ */
+#}
+{% set hero = content['#block_content'] %}
+{% set hero_media = hero.field_image.entity %}
+{% set primary_cta = hero.field_primary_cta.0 %}
+{% set secondary_cta = hero.field_secondary_cta.0 %}
+
+
+<div{{ attributes }}>
+  <div class="container">
+  <div class="hero-inner">
+
+    <div class="hero-content">
+      <span class="kicker">{{ hero.field_kicker.value }}</span>
+      <h1 class="hero-heading">{{ hero.field_heading.value }}</h1>
+      <div class="hero-description">{{ content.field_description }}</div>
+
+      <div class="cta-row">
+        {% if primary_cta %}
+          <div class="btn-pill">
+            <a href="{{ primary_cta.getUrl().toString() }}">{{ primary_cta.title }}</a>
+          </div>
+        {% endif %}
+        {% if secondary_cta %}
+          <div class="link-arrow">
+            <a href="{{ secondary_cta.getUrl().toString() }}">{{ secondary_cta.title }}</a>
+            <span class="link-arrow__icon" aria-hidden="true">&rarr;</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="meta-row">
+        <div class="meta-item">
+          <span class="value">{{ hero.field_stat_1_value.value }}</span>
+          <span class="label">{{ hero.field_stat_1_label.value }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="value">{{ hero.field_stat_2_value.value }}</span>
+          <span class="label">{{ hero.field_stat_2_label.value }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="value">{{ hero.field_stat_3_value.value }}</span>
+          <span class="label">{{ hero.field_stat_3_label.value }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      {% if hero_media %}
+        <img
+          src="{{ file_url(hero_media.field_media_image.entity.uri.value) }}"
+          alt="{{ hero_media.field_media_image.0.alt }}"
+          loading="lazy"
+        >
+      {% endif %}
+      {% if hero.field_badge_title.value %}
+        <div class="floating-card">
+          <span class="floating-card__icon" aria-hidden="true">&#9733;</span>
+          <div class="card-text">
+            <span class="value">{{ hero.field_badge_title.value }}</span>
+            <span class="label">{{ hero.field_badge_subtitle.value }}</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+  </div>
+</div>

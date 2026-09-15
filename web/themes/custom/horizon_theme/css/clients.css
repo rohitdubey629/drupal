@@ -1,0 +1,75 @@
+/**
+ * Horizon theme: clients / logo strip section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ clients section
+ * (lead-in + logo grid, stacked at 992px, Bootstrap's `lg` — col-lg-3/col-lg-9).
+ */
+.clients-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .clients-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.lead-in {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 220px;
+  margin: 0;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+@media (max-width: 992px) {
+  .lead-in {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .lead-in {
+    flex: 0 0 25%;
+  }
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 32px;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .logo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px 48px;
+  }
+}
+
+.logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-item img {
+  width: 100%;
+  max-width: 128px;
+  height: auto;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: filter 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.logo-item img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}

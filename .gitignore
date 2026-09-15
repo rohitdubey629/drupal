@@ -1,0 +1,44 @@
+# Dependencies managed by Composer.
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# Configuration files that may contain sensitive information.
+/web/sites/*/settings.local.php
+/web/sites/*/*settings*.php
+!/web/sites/*/default.settings.php
+/web/sites/*/*services*.yml
+!/web/sites/*/default.services.yml
+
+# User-generated / private content.
+/web/sites/*/files
+/web/sites/*/private
+
+# Multi-site test environment.
+/web/sites/simpletest
+
+# Drupal / PHP generated files.
+*.log
+*.cache
+
+# Node / front-end build artifacts.
+node_modules/
+*.map
+
+# OS files.
+.DS_Store
+Thumbs.db
+
+# IDE / editor files.
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Lando / local dev.
+.lando.local.yml
+
+# Env files.
+.env

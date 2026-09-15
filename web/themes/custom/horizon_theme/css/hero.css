@@ -1,0 +1,272 @@
+/**
+ * Horizon theme: hero banner section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ hero (two-column at 992px,
+ * Bootstrap's `lg` — col-lg-7 / col-lg-5).
+ */
+.hero {
+  padding-top: 60px;
+  padding-bottom: 80px;
+  background: var(--background-color, #ffffff);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 64px 0 48px;
+  }
+}
+
+/* Two-column layout: stacked on mobile/tablet, side by side at 992px+. */
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Flex items default to min-width:auto, which lets the <img>'s intrinsic
+ * size (not its width:100% CSS) push the row wider than the viewport.
+ * min-width:0 lets both columns actually shrink to fit. */
+.hero-content,
+.hero-visual {
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .hero-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-content {
+    flex: 0 1 58.3333%;
+    max-width: 58.3333%;
+  }
+
+  .hero-visual {
+    flex: 0 1 41.6667%;
+    max-width: 41.6667%;
+  }
+}
+
+/* Kicker */
+.hero-content .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+  margin-bottom: 24px;
+}
+
+.hero-content .kicker::before {
+  content: "";
+  display: inline-block;
+  width: 48px;
+  height: 1px;
+  background-color: var(--horizon-accent);
+}
+
+/* Heading */
+.hero-content .hero-heading {
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  color: var(--horizon-heading);
+}
+
+@media (max-width: 1200px) {
+  .hero-content .hero-heading {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content .hero-heading {
+    font-size: 38px;
+    letter-spacing: -1px;
+  }
+}
+
+/* Description */
+.hero-content .hero-description {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 480px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 25%);
+  margin-bottom: 40px;
+}
+
+.hero-content .hero-description p {
+  margin: 0;
+}
+
+/* CTA row */
+.cta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.cta-row .btn-pill a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.cta-row .btn-pill a:hover {
+  transform: translateY(-4px);
+  background-color: color-mix(in srgb, var(--horizon-accent) 90%, black);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.cta-row .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cta-row .link-arrow a {
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--horizon-heading);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s ease-out;
+}
+
+.cta-row .link-arrow a:hover {
+  background-size: 100% 1px;
+}
+
+.cta-row .link-arrow__icon {
+  color: var(--horizon-accent);
+  transition: transform 0.3s ease-out;
+}
+
+.cta-row .link-arrow:hover .link-arrow__icon {
+  transform: translateX(4px);
+}
+
+/* Meta / stats row */
+.meta-row {
+  display: flex;
+  gap: 48px;
+  padding-top: 32px;
+  border-top: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+}
+
+@media (max-width: 576px) {
+  .meta-row {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-item .value {
+  font-family: var(--horizon-nav-font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--horizon-heading);
+}
+
+.meta-item .label {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+}
+
+/* Visual: image + floating card */
+.hero-visual {
+  position: relative;
+}
+
+.hero-visual img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.floating-card {
+  position: absolute;
+  left: 24px;
+  bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  max-width: calc(100% - 48px);
+  background-color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--horizon-text), transparent 88%);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+}
+
+.floating-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--horizon-accent), transparent 90%);
+  color: var(--horizon-accent);
+  font-size: 20px;
+}
+
+.floating-card .card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.floating-card .card-text .value {
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--horizon-heading);
+}
+
+.floating-card .card-text .label {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+}
+
+/* On very narrow screens, the card can't fit icon + two text lines side by
+ * side at 24px/32px offsets without crowding the image edge — stack the
+ * icon above the text and tighten the offsets instead of overlapping. */
+@media (max-width: 400px) {
+  .floating-card {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

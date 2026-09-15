@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Theme override for the "Footer Copyright" custom block bundle.
+ *
+ * Matched automatically via Drupal's block theme suggestion
+ * (block--block-content--type--footer-copyright.html.twig, since the
+ * block_content bundle is "footer_copyright") — no conditional needed.
+ */
+#}
+{% set copyright = content['#block_content'] %}
+{% set copyright_text = copyright.field_footer_copyright_text.value %}
+
+<div{{ attributes }}>
+  <p class="copyright-text">{{ copyright_text }}</p>
+</div>

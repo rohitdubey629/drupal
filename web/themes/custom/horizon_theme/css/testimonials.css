@@ -1,0 +1,148 @@
+/**
+ * Horizon theme: testimonials section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ testimonials section, but
+ * uses a native CSS scroll-snap carousel instead of the Swiper.js library —
+ * no extra JS dependency, and touch devices get free native swipe scrolling.
+ * js/script.js adds the dot indicators + click-to-scroll on top of this.
+ */
+
+/* Section title — visually similar to About/Services/Team but centered
+ * instead of a left/right split, so it uses its own class (.section-title
+ * is shared by those other sections' desktop flex-row layout; reusing it
+ * here would inherit that row layout instead of this centered one). */
+.testimonials-header {
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+.testimonials-header .testimonials-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  position: relative;
+  display: inline-block;
+  padding-top: 24px;
+}
+
+.testimonials-header .testimonials-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 2px;
+  background-color: var(--horizon-accent);
+}
+
+@media (max-width: 768px) {
+  .testimonials-header .testimonials-title {
+    font-size: 32px;
+  }
+}
+
+.testimonials-header .testimonials-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 480px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 30%);
+}
+
+/* Carousel: horizontal scroll-snap track, one slide per view. */
+.testimonials-carousel {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.testimonials-track {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.testimonials-track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials-track__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  min-width: 0;
+}
+
+.testimonial-item {
+  padding: 8px 8px 16px;
+  text-align: center;
+}
+
+.testimonial-item .quote {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.5px;
+  color: var(--horizon-heading);
+  margin: 0 0 32px;
+}
+
+@media (max-width: 768px) {
+  .testimonial-item .quote {
+    font-size: 20px;
+  }
+}
+
+.testimonial-item .avatar {
+  margin: 0 auto 16px;
+  width: 64px;
+  height: 64px;
+}
+
+.testimonial-item .avatar img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonial-item .name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.testimonial-item .role {
+  display: block;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--horizon-text), transparent 40%);
+}
+
+/* Dots, built by js/script.js to match the number of slides. */
+.testimonials-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.testimonials-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50px;
+  background-color: color-mix(in srgb, var(--horizon-text), transparent 60%);
+  cursor: pointer;
+  transition: width 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.testimonials-dots button[aria-current="true"] {
+  width: 24px;
+  background-color: var(--horizon-accent);
+}

@@ -1,0 +1,391 @@
+/**
+ * Horizon theme: site header + responsive navigation.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ (single breakpoint at 1200px).
+ */
+.site-header {
+  background: var(--background-color, #ffffff);
+  border-bottom: 1px solid color-mix(in srgb, var(--horizon-heading), transparent 92%);
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  transition: padding 0.3s, box-shadow 0.3s;
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+  border-bottom-color: transparent;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  transition: padding 0.3s;
+}
+
+.site-header.is-scrolled .site-header__inner {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Branding: "Horizon" + accent dot, mirrors the reference logo mark. */
+.site-header__branding {
+  line-height: 1;
+}
+
+.site-header__branding a {
+  display: flex;
+  align-items: center;
+  font-family: var(--horizon-nav-font);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--horizon-heading);
+  text-decoration: none;
+}
+
+.site-header__branding a:hover {
+  text-decoration: none;
+}
+
+.site-header__branding a::after {
+  content: ".";
+  color: var(--horizon-accent);
+}
+
+.site-header__branding img {
+  max-height: 32px;
+  margin-right: 8px;
+}
+
+/* Header row: nav + CTA share the row, right-aligned like the reference. */
+.site-header__inner {
+  flex-wrap: nowrap;
+}
+
+/* Drupal wraps the header region's blocks in a `.region-header` div
+ * between .site-header__inner and the actual branding/nav/CTA blocks —
+ * `display: contents` removes that div from the box model so its children
+ * become direct flex items of .site-header__inner, same as if there were
+ * no wrapper at all. */
+.site-header__inner > .region-header {
+  display: contents;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+/* CTA is desktop-only, matching the reference (d-none d-xl-inline-flex). */
+.header-cta {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .header-cta {
+    display: block;
+    margin-left: 2rem;
+    flex-shrink: 0;
+  }
+}
+
+.header-cta .btn-cta,
+.header-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.header-cta .btn-cta:hover,
+.header-cta a:hover {
+  transform: translateY(-2px);
+  background-color: color-mix(in srgb, var(--horizon-accent) 90%, black);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Mobile hamburger toggle (visible below 1200px, hidden on desktop) */
+.site-header__nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.site-header__nav-toggle-bar {
+  display: block;
+  height: 2px;
+  background: var(--horizon-heading);
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.site-header__nav-toggle[aria-expanded="true"] .site-header__nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-header__nav-toggle[aria-expanded="true"] .site-header__nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header__nav-toggle[aria-expanded="true"] .site-header__nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile/tablet (below 1200px): primary menu collapses into an overlay panel. */
+.primary-menu {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  position: fixed;
+  inset: 60px 20px 20px 20px;
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--horizon-heading), transparent 90%);
+  border-radius: 6px;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow-y: auto;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 9998;
+}
+
+.primary-menu.is-open {
+  max-height: calc(100vh - 80px);
+  opacity: 1;
+  visibility: visible;
+}
+
+.primary-menu__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-menu > li {
+  border-top: 1px solid color-mix(in srgb, var(--horizon-heading), transparent 92%);
+}
+
+.primary-menu > li:first-child {
+  border-top: 0;
+}
+
+.primary-menu > li > .primary-menu__row > a {
+  flex: 1 1 auto;
+  display: block;
+  padding: 12px 20px;
+  color: var(--horizon-nav-color);
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.primary-menu > li > .primary-menu__row > a.is-active {
+  color: var(--horizon-nav-hover-color);
+}
+
+/* Dropdown toggle chevron (mobile: click to expand/collapse submenu). */
+.primary-menu__toggle {
+  width: 36px;
+  height: 36px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.primary-menu__toggle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--horizon-nav-color);
+  border-bottom: 2px solid var(--horizon-nav-color);
+  transform: translate(-50%, -65%) rotate(45deg);
+  transition: transform 0.25s ease;
+}
+
+.primary-menu__toggle[aria-expanded="true"]::before {
+  transform: translate(-50%, -35%) rotate(-135deg);
+}
+
+.primary-menu__submenu {
+  list-style: none;
+  margin: 0 20px 10px;
+  padding: 4px 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.primary-menu__submenu.is-open {
+  max-height: 600px;
+}
+
+.primary-menu__submenu a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--horizon-nav-color);
+  text-decoration: none;
+}
+
+.primary-menu__submenu .primary-menu__submenu {
+  margin-left: 12px;
+}
+
+/* Desktop (1200px+): horizontal nav, hover-driven dropdowns, hide the hamburger. */
+@media (min-width: 1200px) {
+  .site-header__nav-toggle {
+    display: none;
+  }
+
+  .site-header__nav {
+    position: static;
+  }
+
+  .primary-menu {
+    position: static;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  .primary-menu > li {
+    border-top: 0;
+    position: relative;
+  }
+
+  .primary-menu > li > .primary-menu__row > a {
+    position: relative;
+    padding: 8px 12px;
+    font-size: 15px;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+
+  .primary-menu > li > .primary-menu__row > a::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--horizon-nav-hover-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .primary-menu > li:hover > .primary-menu__row > a,
+  .primary-menu > li > .primary-menu__row > a.is-active {
+    color: var(--horizon-nav-hover-color);
+  }
+
+  .primary-menu > li:hover > .primary-menu__row > a::before,
+  .primary-menu > li > .primary-menu__row > a.is-active::before {
+    transform: scaleX(1);
+  }
+
+  /* Desktop dropdown toggle becomes a plain visual chevron, not clickable. */
+  .primary-menu__toggle {
+    pointer-events: none;
+    width: 16px;
+    height: 16px;
+    margin-right: 0;
+  }
+
+  .primary-menu__toggle::before {
+    width: 6px;
+    height: 6px;
+    border-color: var(--horizon-nav-color);
+  }
+
+  .primary-menu > li:hover > .primary-menu__row > .primary-menu__toggle::before,
+  .primary-menu > li > .primary-menu__row > a.is-active + .primary-menu__toggle::before {
+    border-color: var(--horizon-nav-hover-color);
+  }
+
+  .primary-menu__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    max-height: none;
+    margin: 0;
+    padding: 8px 0;
+    background: #ffffff;
+    border: 1px solid color-mix(in srgb, var(--horizon-heading), transparent 88%);
+    border-radius: 4px;
+    box-shadow: 0px 16px 40px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    overflow: visible;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .primary-menu__submenu a {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .primary-menu__submenu .primary-menu__submenu {
+    top: 0;
+    left: -100%;
+  }
+
+  .primary-menu > li:hover > .primary-menu__submenu,
+  .primary-menu > li:focus-within > .primary-menu__submenu {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Nested "deep dropdown" — same hover/focus reveal, one level down. */
+  .primary-menu__submenu > li {
+    position: relative;
+  }
+
+  .primary-menu__submenu > li:hover > .primary-menu__submenu,
+  .primary-menu__submenu > li:focus-within > .primary-menu__submenu {
+    opacity: 1;
+    visibility: visible;
+  }
+}

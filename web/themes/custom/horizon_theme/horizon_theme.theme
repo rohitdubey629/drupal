@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Horizon Theme.
+ */
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function horizon_theme_preprocess_html(array &$variables) {
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function horizon_theme_preprocess_page(array &$variables) {
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function horizon_theme_preprocess_node(array &$variables) {
+  $variables['attributes']['class'][] = 'horizon-card';
+
+  // Services grid shows "01, 02..." per card. This used to be a CSS
+  // counter (a purely visual trick with no real data behind it) — the
+  // count is actually backed by the Services View's result set, so we
+  // number it here instead: a static counter advances once per "service"
+  // teaser Drupal renders, in the same order the View outputs them.
+  if ($variables['node']->bundle() === 'service' && $variables['view_mode'] === 'teaser') {
+    static $index = 0;
+    $index++;
+    $variables['service_index'] = $index;
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function horizon_theme_preprocess_block(array &$variables) {
+  // The Contact Section block has no field for the form itself — it's not
+  // content that belongs in a field, it's a Webform (the "Contact Form"
+  // webform, machine name `contact_form`), attached here so the template
+  // can print it as content.contact_form, the same way it prints any other
+  // field.
+  $block_content = $variables['content']['#block_content'] ?? NULL;
+  if ($block_content && $block_content->bundle() === 'contact_section') {
+    $webform = \Drupal\webform\Entity\Webform::load('contact_form');
+    if ($webform) {
+      $variables['content']['contact_form'] = $webform->getSubmissionForm();
+    }
+  }
+
+  // The Footer About block repeats the "Horizon." site name/logo already
+  // shown in the header — that's the real site name, from Site Information
+  // config, not a field on the block, so it's attached here the same way
+  // the contact form is attached above.
+  if ($block_content && $block_content->bundle() === 'footer_about') {
+    $variables['content']['site_name'] = \Drupal::config('system.site')->get('name');
+  }
+
+  // Every landing-page section used to get its "id + section class" wrapper
+  // from a dedicated theme region in page.html.twig (one region per
+  // section). Now that all of them are placed in the single "content"
+  // region, that per-region wrapper no longer exists — so the section
+  // class (and the shared `.section` padding from layout.css) is added
+  // here instead, keyed off the block itself, so it doesn't matter which
+  // region a section block lives in.
+  $section_classes = [
+    'hero_banner' => 'hero',
+    'client_logos' => 'clients',
+    'about' => 'about',
+    'call_to_action' => 'call-to-action',
+    'stats' => 'stats',
+    'team_section' => 'team',
+    'testimonials_section' => 'testimonials',
+    'pricing_section' => 'pricing',
+    'faq_section' => 'faq',
+    'contact_section' => 'contact',
+    'editorial_section' => 'editorial',
+    // Portfolio's title/intro live on their own block_content ("portfolio"
+    // bundle); the grid itself is a separate Views block placed right
+    // after it (see $views_extra_classes below) since the grid items are
+    // portfolio_item nodes, not paragraphs — so this one carries the
+    // section id/class, the grid block doesn't.
+    'portfolio' => 'portfolio',
+  ];
+  if ($block_content && isset($section_classes[$block_content->bundle()])) {
+    $slug = $section_classes[$block_content->bundle()];
+    $variables['attributes']['id'] = $slug;
+    $variables['attributes']['class'][] = $slug;
+    $variables['attributes']['class'][] = 'section';
+
+    // Stats and Call to Action are always on a dark background — their
+    // text colors (stats.css, cta.css) are hardcoded white/light-gray for
+    // contrast against it, same as the Footer, so they need the same
+    // `dark-background` utility class. Client Logos gets the matching
+    // `light-background` utility instead (reference site: #f4f3f0).
+    if (in_array($block_content->bundle(), ['stats', 'call_to_action'], TRUE)) {
+      $variables['attributes']['class'][] = 'dark-background';
+    }
+    elseif ($block_content->bundle() === 'client_logos') {
+      $variables['attributes']['class'][] = 'light-background';
+    }
+  }
+
+  // The Services section is a Views block, not a block_content entity, so
+  // it needs the same section class added by plugin ID instead of bundle.
+  // It's also on the light-background (same as Client Logos).
+  $views_section_classes = [
+    'views_block:services-block_1' => 'services',
+  ];
+  $plugin_id = $variables['elements']['#plugin_id'] ?? NULL;
+  if (isset($views_section_classes[$plugin_id])) {
+    $slug = $views_section_classes[$plugin_id];
+    $variables['attributes']['id'] = $slug;
+    $variables['attributes']['class'][] = $slug;
+    $variables['attributes']['class'][] = 'section';
+    $variables['attributes']['class'][] = 'light-background';
+  }
+
+  // The Portfolio grid is also a Views block (portfolio_item nodes), placed
+  // directly under the "portfolio" title block above. It doesn't get its
+  // own `.section` padding-top (that would double up with the title
+  // block's padding-bottom) — just a bottom gap before the next section.
+  if ($plugin_id === 'views_block:portfolio-block_1') {
+    $variables['attributes']['class'][] = 'portfolio-grid-wrap';
+  }
+
+  // The header's three blocks (branding, main menu, "Start a Project" CTA)
+  // used to get their .site-header__branding/.site-header__nav/.header-cta
+  // wrapper classes from a dedicated header region template — same gap as
+  // the landing-page sections above, so it's fixed the same way, keyed off
+  // the block itself instead of a region.
+  $header_block_classes = [
+    'system_branding_block' => 'site-header__branding',
+    'system_menu_block:main' => 'site-header__nav',
+  ];
+  if (isset($header_block_classes[$plugin_id])) {
+    $variables['attributes']['class'][] = $header_block_classes[$plugin_id];
+  }
+  elseif (($variables['elements']['#id'] ?? NULL) === 'horizon_theme_startaproject') {
+    $variables['attributes']['class'][] = 'header-cta';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for page.
+ */
+function horizon_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $suggestions[] = 'page__node__' . $node->bundle();
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for node.
+ */
+function horizon_theme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $node = $variables['elements']['#node'];
+  $suggestions[] = 'node__' . $node->bundle() . '__' . $variables['elements']['#view_mode'];
+}

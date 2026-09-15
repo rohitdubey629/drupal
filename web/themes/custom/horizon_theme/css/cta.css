@@ -1,0 +1,83 @@
+/**
+ * Horizon theme: call-to-action banner section.
+ * Mirrors https://bootstrapmade.com/demo/Horizon/ call-to-action section
+ * (centered, col-lg-8 max-width, dark background).
+ */
+.call-to-action {
+  padding: 96px 0;
+}
+
+@media (max-width: 768px) {
+  .call-to-action {
+    padding: 64px 0;
+  }
+}
+
+.cta-wrap {
+  max-width: 666px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta-wrap .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--horizon-accent);
+  margin-bottom: 24px;
+}
+
+.cta-wrap h2 {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .cta-wrap h2 {
+    font-size: 32px;
+  }
+}
+
+.cta-wrap p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto 40px auto;
+  color: color-mix(in srgb, #bfbfc6, transparent 20%);
+}
+
+.cta-wrap .btn-pill {
+  display: inline-flex;
+}
+
+.cta-wrap .btn-pill a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  background-color: var(--horizon-accent);
+  color: #ffffff;
+  font-family: var(--horizon-nav-font);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.cta-wrap .btn-pill a::after {
+  content: "\2192";
+}
+
+.cta-wrap .btn-pill a:hover {
+  transform: translateY(-4px);
+  background-color: color-mix(in srgb, var(--horizon-accent) 90%, black);
+  color: #ffffff;
+  text-decoration: none;
+}
