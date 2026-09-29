@@ -1,0 +1,26 @@
+{# this is the presentational component file for the typography atom #}
+{#
+/**
+ * @file
+ * Presentational "Typography" atom — reusable heading/paragraph text.
+ *
+ * Covers the repeated `<h1 class="label">` ... `<h6 class="label">` and
+ * `<p class="wdc-paragraph">` markup used across the Content Hub Banner /
+ * Duo / Featured / Trending organisms, the Choose Your Interest component,
+ * and the Hero Banner / Stats blocks' `<span class="label">` stat labels —
+ * same "one atom, several variants" pattern as the Button atom.
+ *
+ * Variables:
+ * - tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' (default 'p').
+ * - text: the text content (string).
+ * - variant: '' | 'label' | 'paragraph' (default ''). 'label' adds the
+ *   `label` class shared by headings and stat labels; 'paragraph' adds
+ *   the `wdc-paragraph` class used by card/body copy.
+ * - class: extra class(es) to add on top of the variant class (string,
+ *   optional).
+ */
+#}
+{% set tag = tag|default('p') %}
+{% set variant_class = variant == 'label' ? 'label' : (variant == 'paragraph' ? 'wdc-paragraph' : '') %}
+{% set classes = [variant_class, class|default('')]|filter(v => v)|join(' ') %}
+<{{ tag }}{% if classes %} class="{{ classes }}"{% endif %}>{{ text }}</{{ tag }}>

@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Theme override for the "Content Hub Banner" custom block bundle.
+ *
+ * This wrapper only extracts the block_content entity's field values and
+ * hands them to the presentational component
+ * (templates/components/content-hub-banner/content-hub-banner.html.twig) —
+ * the same component Storybook renders in isolation via that folder's
+ * content-hub-banner.stories.twig, with mock data instead of a real entity.
+ */
+#}
+{% set banner = content['#block_content'] %}
+{% set image = banner.field_image.entity %}
+
+{% include '@horizon_theme/components/03-organisms/content-hub-banner/content-hub-banner.html.twig' with {
+  attributes: attributes,
+  title_suffix: title_suffix,
+  image_url: image ? file_url(image.field_media_image.entity.uri.value) : '',
+  image_alt: image ? image.field_media_image.0.alt : '',
+  title: banner.field_title.value,
+} only %}

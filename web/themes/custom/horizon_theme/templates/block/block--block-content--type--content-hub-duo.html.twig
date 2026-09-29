@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * Theme override for the "Content Hub Duo" custom block bundle.
+ *
+ * `section` is the raw block_content entity, looped for `field_duo_items`
+ * (exactly 2 "Category Card" paragraphs: icon + heading title + card
+ * image/title/description + unlimited link/pill buttons) — same
+ * direct-entity-access technique as the Contact Section's info items.
+ *
+ * A card's `field_card_links` count decides which body variant the
+ * presentational component renders (single description+button, or a
+ * pill-button grid) — see content-hub-duo.html.twig.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set items = [] %}
+{% for item in section.field_duo_items %}
+  {% set entry = item.entity %}
+  {% if entry %}
+    {% set has_icon = entry.field_icon.target_id %}
+    {% set icon = has_icon ? entry.field_icon.entity : null %}
+    {% set has_card_image = entry.field_card_image.target_id %}
+    {% set card_image = has_card_image ? entry.field_card_image.entity : null %}
+
+    {% set links = [] %}
+    {% for link_item in entry.field_card_links %}
+      {% set links = links|merge([{
+        url: link_item.getUrl().toString(),
+        title: link_item.title,
+      }]) %}
+    {% endfor %}
+
+    {% set items = items|merge([{
+      heading_icon_url: has_icon ? file_url(icon.field_media_image.entity.uri.value) : '',
+      heading_title: entry.field_title.value,
+      card_image_url: has_card_image ? file_url(card_image.field_media_image.entity.uri.value) : '',
+      card_image_alt: has_card_image ? card_image.field_media_image.0.alt : '',
+      card_title: entry.field_card_title.value,
+      card_description: entry.field_description.value,
+      links: links,
+    }]) %}
+  {% endif %}
+{% endfor %}
+
+{% include '@horizon_theme/components/03-organisms/content-hub-duo/content-hub-duo.html.twig' with {
+  attributes: attributes,
+  title_suffix: title_suffix,
+  items: items,
+} only %}

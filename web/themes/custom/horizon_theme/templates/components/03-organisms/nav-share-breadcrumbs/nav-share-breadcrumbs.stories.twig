@@ -1,0 +1,24 @@
+{% stories nav_share_breadcrumbs with { title: 'Organisms/Nav Share Breadcrumbs' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      share_label: 'Share This',
+      social_links: [
+        { icon_url: 'https://washington.org/favicon.ico', icon_alt: 'Facebook', url: '#facebook', label: 'Facebook' },
+        { icon_url: 'https://washington.org/favicon.ico', icon_alt: 'Pinterest', url: '#pinterest', label: 'Pinterest' }
+      ],
+      breadcrumb_links: [
+        { text: 'Home', url: '/' },
+        { text: 'The District Blog', url: '' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/nav-share-breadcrumbs/nav-share-breadcrumbs.html.twig' with {
+      share_label: share_label,
+      social_links: social_links,
+      breadcrumb_links: breadcrumb_links,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

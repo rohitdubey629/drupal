@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Presentational "Filter By Articles" card component.
+ *
+ * Pure component: takes plain variables, no Drupal/Views awareness. Built
+ * and previewed in isolation via filter-by-articles-card.stories.twig (same
+ * folder), then reused as-is by the View's field template
+ * (views-view-fields--filter-by-articles.html.twig), which is the only
+ * piece that knows about the row/fields/entity.
+ *
+ * Same shape as the Content Hub Trending card (image, title, description,
+ * outline "Read More" button), just in a horizontal image-left/
+ * content-right layout instead of a carousel item.
+ *
+ * Variables:
+ * - image_url / image_alt: card image (strings).
+ * - title: card title (string).
+ * - description: card description (string).
+ * - url: card link (string).
+ * - link_title: "Read More" button text (string).
+ */
+#}
+<div class="filter-by-articles-card">
+  <a class="filter-by-articles-card_image" href="{{ url }}" aria-label="Link">
+    {% if image_url %}
+      {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+        url: image_url,
+        alt: image_alt|default(''),
+      } only %}
+    {% endif %}
+  </a>
+  <div class="filter-by-articles-card_body">
+    <a class="filter-by-articles-card_link" href="{{ url }}" aria-label="Link">
+      {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+        tag: 'h3',
+        text: title,
+        class: 'filter-by-articles-card_title',
+      } only %}
+      {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+        tag: 'p',
+        text: description,
+        class: 'filter-by-articles-card_description',
+      } only %}
+    </a>
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: url,
+      label: link_title|default('Read More'),
+    } only %}
+  </div>
+</div>

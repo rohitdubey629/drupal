@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for the "Social Highlights" custom block bundle.
+ *
+ * `section` is the raw block_content entity, looped for `field_highlight_items`
+ * (unlimited "Social Highlight Card" paragraphs: image + badge title + date +
+ * location + optional link) — same direct-entity-access technique as the
+ * Content Hub Duo's category cards.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set items = [] %}
+{% for item in section.field_highlight_items %}
+  {% set entry = item.entity %}
+  {% if entry %}
+    {% set has_media = entry.field_sh_image.target_id %}
+    {% set media = has_media ? entry.field_sh_image.entity : null %}
+    {% set is_video = has_media and media.bundle() == 'video' %}
+    {% set has_link = not entry.field_sh_link.isEmpty %}
+
+    {% set items = items|merge([{
+      image_url: (has_media and not is_video) ? file_url(media.field_media_image.entity.uri.value) : '',
+      image_alt: (has_media and not is_video) ? media.field_media_image.0.alt : '',
+      video_url: is_video ? file_url(media.field_media_video_file.entity.uri.value) : '',
+      badge_text: entry.field_sh_badge.value,
+      date: entry.field_sh_date.value,
+      location: entry.field_sh_location.value,
+      link_url: has_link ? entry.field_sh_link.0.getUrl().toString() : '',
+    }]) %}
+  {% endif %}
+{% endfor %}
+
+{% include '@horizon_theme/components/03-organisms/social-highlights/social-highlights.html.twig' with {
+  attributes: attributes,
+  title_suffix: title_suffix,
+  items: items,
+} only %}

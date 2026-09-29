@@ -1,0 +1,45 @@
+{% stories filter_by_articles_card with { title: 'Molecules/Filter By Articles Card' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      image_url: '',
+      image_alt: '',
+      title: '3-Day Itinerary for the Perfect Fall Getaway in Washington, DC',
+      description: 'Plan a spectacular fall-inspired trip with this DC itinerary full of spooky tours, cozy cocktail lounges and nature trails filled with changing foliage.',
+      url: '#',
+      link_title: 'Read More'
+    }
+  } %}
+    {% include '@horizon_theme/components/02-molecules/filter-by-articles-card/filter-by-articles-card.html.twig' with {
+      image_url: image_url,
+      image_alt: image_alt,
+      title: title,
+      description: description,
+      url: url,
+      link_title: link_title,
+    } only %}
+  {% endstory %}
+
+  {% story no_image with {
+    name: '2. Without image',
+    args: {
+      image_url: '',
+      image_alt: '',
+      title: 'Guide to Washington Spirit Soccer in DC',
+      description: 'Your complete guide to the Washington Spirit and Audi Field.',
+      url: '#',
+      link_title: 'Read More'
+    }
+  } %}
+    {% include '@horizon_theme/components/02-molecules/filter-by-articles-card/filter-by-articles-card.html.twig' with {
+      image_url: image_url,
+      image_alt: image_alt,
+      title: title,
+      description: description,
+      url: url,
+      link_title: link_title,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

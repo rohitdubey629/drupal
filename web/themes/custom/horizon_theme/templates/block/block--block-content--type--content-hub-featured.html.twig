@@ -1,0 +1,72 @@
+{#
+/**
+ * @file
+ * Theme override for the "Content Hub Featured" custom block bundle.
+ *
+ * `section` is the raw block_content entity. `field_card_heading`
+ * (single "Heading" paragraph: icon + title + link) and `field_main_card`
+ * / `field_cards` (single / unlimited "Article Card" paragraphs: image +
+ * title + description + link) are read directly — same technique as the
+ * Contact Section's info items.
+ *
+ * Twig macros can't return a data structure (only markup), so the
+ * "extract an Article Card paragraph into a plain {image_url, title,
+ * ...} map" step is a plain {% set %}, repeated for the main card and
+ * each of the small cards, instead of a shared macro.
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set has_heading = section.field_card_heading.target_id %}
+{% set heading = has_heading ? section.field_card_heading.entity : null %}
+{% set heading_icon = has_heading and heading.field_icon.target_id ? heading.field_icon.entity : null %}
+{% set heading_link = has_heading ? heading.field_link.0 : null %}
+
+{% set main_card_entity = section.field_main_card.entity %}
+{% set main_card = {} %}
+{% if section.field_main_card.target_id %}
+  {% set main_image = main_card_entity.field_card_image.entity %}
+  {% set main_link = main_card_entity.field_link.0 %}
+  {% set main_card = {
+    image_url: main_card_entity.field_card_image.target_id ? file_url(main_image.field_media_image.entity.uri.value) : '',
+    image_alt: main_card_entity.field_card_image.target_id ? main_image.field_media_image.0.alt : '',
+    title: main_card_entity.field_title.value,
+    description: main_card_entity.field_description.value,
+    url: main_link ? main_link.getUrl().toString() : '#',
+    link_title: main_link ? main_link.title : '',
+  } %}
+{% endif %}
+
+{% set cards = [] %}
+{% for item in section.field_cards %}
+  {% set entry = item.entity %}
+  {% if entry %}
+    {% set entry_image = entry.field_card_image.entity %}
+    {% set entry_link = entry.field_link.0 %}
+    {% set cards = cards|merge([{
+      image_url: entry.field_card_image.target_id ? file_url(entry_image.field_media_image.entity.uri.value) : '',
+      image_alt: entry.field_card_image.target_id ? entry_image.field_media_image.0.alt : '',
+      title: entry.field_title.value,
+      description: entry.field_description.value,
+      url: entry_link ? entry_link.getUrl().toString() : '#',
+      link_title: entry_link ? entry_link.title : '',
+    }]) %}
+  {% endif %}
+{% endfor %}
+
+{#
+  The "Choose Your Interest" links scroll to "#featured", "#trending", etc.
+  — the anchor id is derived from the heading title so it always matches
+  whatever that component generates for the same label.
+#}
+{% set anchor = has_heading ? heading.field_title.value|lower|trim|replace({' ': '-'}) : '' %}
+
+{% include '@horizon_theme/components/03-organisms/content-hub-featured/content-hub-featured.html.twig' with {
+  attributes: attributes.setAttribute('id', anchor),
+  title_suffix: title_suffix,
+  heading_icon_url: heading_icon ? file_url(heading_icon.field_media_image.entity.uri.value) : '',
+  heading_title: heading ? heading.field_title.value : '',
+  heading_link_url: heading_link ? heading_link.getUrl().toString() : '#',
+  heading_link_title: heading_link ? heading_link.title : '',
+  main_card: main_card,
+  cards: cards,
+} only %}

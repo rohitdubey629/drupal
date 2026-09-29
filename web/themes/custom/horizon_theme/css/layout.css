@@ -24,7 +24,7 @@
 
 .site-main {
   flex: 1 0 auto;
-  padding: 2rem 0;
+  /* padding: 2rem 0; */
 }
 
 .site-main__inner {
@@ -68,9 +68,9 @@
 
 /* Desktop: more breathing room */
 @media (min-width: 992px) {
-  .site-main {
+  /* .site-main {
     padding: 3rem 0;
-  }
+  } */
 
   .site-main__inner {
     gap: 3rem;

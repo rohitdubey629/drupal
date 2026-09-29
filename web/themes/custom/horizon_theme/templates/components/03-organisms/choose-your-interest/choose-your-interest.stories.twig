@@ -1,0 +1,21 @@
+{% stories choose_your_interest with { title: 'Organisms/Choose Your Interest' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      heading: 'CHOOSE YOUR INTEREST',
+      items: [
+        { icon_url: '', icon_alt: 'Featured', label: 'Featured', anchor: 'featured' },
+        { icon_url: '', icon_alt: 'Trending', label: 'Trending', anchor: 'trending' },
+        { icon_url: '', icon_alt: 'What\'s New', label: 'What\'s New', anchor: 'whats-new' },
+        { icon_url: '', icon_alt: 'Places to Eat', label: 'Places to Eat', anchor: 'places-to-eat' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/choose-your-interest/choose-your-interest.html.twig' with {
+      heading: heading,
+      items: items,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

@@ -1,0 +1,78 @@
+{#
+/**
+ * @file
+ * Presentational "Nav Share Breadcrumbs" component.
+ *
+ * Pure component: plain variables only, no Drupal entity awareness — same
+ * pattern as the Content Hub Banner component. Reused as-is by:
+ * - block--block-content--type--nav-share-breadcrumbs.html.twig (real site,
+ *   entity fields + Drupal breadcrumb service feed the variables below)
+ * - nav-share-breadcrumbs.stories.twig (Storybook, mock data)
+ *
+ * The share icon is a single toggle (not all platforms shown inline) —
+ * clicking it reveals the platform list below it. js/script.js adds the
+ * click-to-open/close behavior (class="js-share-toggle" /
+ * class="js-share-panel").
+ *
+ * Variables:
+ * - share_label: "Share This" label text (string).
+ * - social_links: list of { icon_url, icon_alt, icon_svg, url, label }.
+ *   icon_svg (raw markup string) is used when icon_url is empty — a
+ *   platform fallback icon keyed by the link's title.
+ * - breadcrumb_links: list of { text, url } — url is null/empty for the
+ *   current (last, non-linked) page.
+ * - attributes: optional Attribute object for the root element.
+ * - title_suffix: optional render array (Drupal's contextual links
+ *   placeholder) — must be printed inside the root element for the Layout
+ *   Builder "edit" pencil to appear on hover.
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('container', 'nav-share-breadcrumbs') }}>
+  {{ title_suffix|default('') }}
+
+  <div class="sharethis">
+    <span class="sharethis--title">{{ share_label }}</span>
+
+    <div class="sharethis-toggle-wrap">
+      <button type="button" class="sharethis-toggle js-share-toggle" aria-expanded="false" aria-label="{{ 'Share this page'|t }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.2M8.2 13.2l7.6 4.2"/></svg>
+      </button>
+
+      <span class="sharethis-favorite" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8z"/></svg>
+      </span>
+
+      <div class="sharethis-panel js-share-panel">
+        {% for link in social_links %}
+          <a href="{{ link.url }}" target="_blank" rel="nofollow noopener" aria-label="{{ link.label }}">
+            {% if link.icon_url %}
+              {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+                url: link.icon_url,
+                loading: 'lazy',
+              } only %}
+            {% elseif link.icon_svg %}
+              {{ link.icon_svg|raw }}
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="social--breadcrumb">
+    <nav role="navigation" aria-label="{{ 'Breadcrumb'|t }}">
+      <ol class="breadcrumb">
+        {% for crumb in breadcrumb_links %}
+          <li class="breadcrumb__item{{ loop.last ? ' breadcrumb__item--current' }}">
+            {% if crumb.url %}
+              <a class="breadcrumb__link" href="{{ crumb.url }}">{{ crumb.text }}</a>
+            {% else %}
+              {{ crumb.text }}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </nav>
+  </div>
+
+</div>

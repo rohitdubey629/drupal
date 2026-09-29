@@ -1,0 +1,40 @@
+{% stories content_hub_duo with { title: 'Organisms/Content Hub Duo' } %}
+
+  {% story default with {
+    name: '1. Default (pills + description variants)',
+    args: {
+      items: [
+        {
+          heading_icon_url: '',
+          heading_title: 'Things to Do',
+          card_image_url: '',
+          card_image_alt: '',
+          card_title: 'Find Things to Do',
+          card_description: '',
+          links: [
+            { url: '#', title: 'This Week' },
+            { url: '#', title: 'This Weekend' },
+            { url: '#', title: 'This Month' },
+            { url: '#', title: 'See All Things to Do' }
+          ]
+        },
+        {
+          heading_icon_url: '',
+          heading_title: 'Itineraries',
+          card_image_url: '',
+          card_image_alt: '',
+          card_title: 'Ultimate Itineraries',
+          card_description: 'Monuments and memorials, eclectic neighborhoods, America\'s best restaurant city, true local flavor.',
+          links: [
+            { url: '#', title: 'See All Itineraries' }
+          ]
+        }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/content-hub-duo/content-hub-duo.html.twig' with {
+      items: items,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

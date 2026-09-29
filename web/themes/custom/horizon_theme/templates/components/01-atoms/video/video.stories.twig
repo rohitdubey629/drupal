@@ -1,0 +1,18 @@
+{# this is test case file for video component #}
+
+{% stories video with { title: 'Atoms/Video' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+      video_class: 'image js-social-video',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/video/video.html.twig' with {
+      url: url,
+      video_class: video_class,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

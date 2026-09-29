@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * "Visit DC Home" layout — page-skeleton composition of the organisms
+ * that make up the washington.org/visit-dc style homepage, in the order
+ * they appear on the real page.
+ *
+ * This is a layout (atomic design "templates" level): structure only,
+ * fed with mock data via Storybook args. It is NOT wired into Drupal's
+ * page render — the real page is assembled via Layout Builder against
+ * actual content, using the same organisms.
+ *
+ * Variables — one arg group per organism, matching that organism's own
+ * component variables exactly:
+ * - banner: content-hub-banner args.
+ * - nav_share_breadcrumbs: nav-share-breadcrumbs args.
+ * - choose_your_interest: choose-your-interest args.
+ * - content_hub_featured: content-hub-featured args.
+ * - content_hub_trending: content-hub-trending args.
+ * - content_hub_duo: content-hub-duo args.
+ * - social_highlights: social-highlights args.
+ */
+#}
+<div class="visit-dc-home">
+
+  {% include '@horizon_theme/components/03-organisms/content-hub-banner/content-hub-banner.html.twig' with {
+    image_url: banner.image_url,
+    image_alt: banner.image_alt,
+    title: banner.title,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/nav-share-breadcrumbs/nav-share-breadcrumbs.html.twig' with {
+    share_label: nav_share_breadcrumbs.share_label,
+    social_links: nav_share_breadcrumbs.social_links,
+    breadcrumb_links: nav_share_breadcrumbs.breadcrumb_links,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/choose-your-interest/choose-your-interest.html.twig' with {
+    heading: choose_your_interest.heading,
+    items: choose_your_interest.items,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/content-hub-featured/content-hub-featured.html.twig' with {
+    heading_icon_url: content_hub_featured.heading_icon_url,
+    heading_title: content_hub_featured.heading_title,
+    heading_link_url: content_hub_featured.heading_link_url,
+    heading_link_title: content_hub_featured.heading_link_title,
+    main_card: content_hub_featured.main_card,
+    cards: content_hub_featured.cards,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/content-hub-trending/content-hub-trending.html.twig' with {
+    heading_icon_url: content_hub_trending.heading_icon_url,
+    heading_title: content_hub_trending.heading_title,
+    heading_link_url: content_hub_trending.heading_link_url,
+    heading_link_title: content_hub_trending.heading_link_title,
+    cards: content_hub_trending.cards,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/content-hub-duo/content-hub-duo.html.twig' with {
+    items: content_hub_duo.items,
+  } only %}
+
+  {% include '@horizon_theme/components/03-organisms/social-highlights/social-highlights.html.twig' with {
+    items: social_highlights.items,
+  } only %}
+
+</div>

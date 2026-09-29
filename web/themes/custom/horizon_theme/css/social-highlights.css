@@ -1,0 +1,190 @@
+/**
+ * Horizon theme: Social Highlights.
+ * Instagram/CrowdRiff-style carousel — badge title reveals on hover,
+ * dots pagination, prev/next arrows.
+ */
+.social-highlights {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  overflow: hidden;
+}
+
+.social-highlights_carousel {
+  position: relative;
+}
+
+.social-highlights_track {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.social-highlights_slide {
+  position: relative;
+  display: block;
+  flex: 0 0 260px;
+  width: 260px;
+  aspect-ratio: 0.75 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  background: #111;
+}
+
+.social-highlights_slide:hover {
+  text-decoration: none;
+}
+
+.social-highlights_slide img.image,
+.social-highlights_slide video.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Top bar: IG icon always visible; badge title (+ play icon for video
+   slides) only reveal on hover, matching washington.org's CrowdRiff
+   gallery interaction — but positioned at the TOP, not the bottom. */
+.social-highlights_slide__top-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+}
+
+.social-highlights_slide__ig {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.social-highlights_slide__top-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  z-index: -1;
+}
+
+.social-highlights_slide:hover .social-highlights_slide__top-bar::before,
+.social-highlights_slide:focus-visible .social-highlights_slide__top-bar::before {
+  opacity: 1;
+}
+
+.social-highlights_slide__caption {
+  flex: 1 1 auto;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.social-highlights_slide__play-toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.social-highlights_slide:hover .social-highlights_slide__caption,
+.social-highlights_slide:hover .social-highlights_slide__play-toggle,
+.social-highlights_slide:focus-visible .social-highlights_slide__caption,
+.social-highlights_slide:focus-visible .social-highlights_slide__play-toggle {
+  opacity: 1;
+}
+
+/* The button always shows the icon for the action a click will perform:
+   "playing" state (video running) shows a pause icon, and vice versa. */
+.social-highlights_slide__play-toggle .icon-play {
+  display: none;
+}
+
+.social-highlights_slide__play-toggle[data-state="paused"] .icon-pause {
+  display: none;
+}
+
+.social-highlights_slide__play-toggle[data-state="paused"] .icon-play {
+  display: block;
+}
+
+.social-highlights_dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.social-highlights_dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d8d8d8;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.social-highlights_dots .dot.is-active {
+  background: #7d3269;
+}
+
+.social-highlights_arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-highlights_arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #d8d8d8;
+  background: #ffffff;
+  color: #1a1a2e;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.social-highlights_arrow:hover {
+  background-color: #7d3269;
+  border-color: #7d3269;
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .social-highlights_slide {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+}

@@ -1,0 +1,36 @@
+{% stories content_hub_featured with { title: 'Organisms/Content Hub Featured' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      heading_icon_url: '',
+      heading_title: 'Featured',
+      heading_link_url: '#',
+      heading_link_title: 'See All Featured',
+      main_card: {
+        image_url: 'https://washington.org/sites/default/files/styles/get_the_most_out_of_dc_517_x_322/public/2025-08/LincolnMemorial_006_7406015_20221101.jpg.webp',
+        image_alt: 'Lincoln Memorial',
+        title: '3-Day Itinerary for the Perfect Fall Getaway in Washington, DC',
+        description: 'Plan a spectacular fall-inspired trip with this DC itinerary full of spooky tours, cozy cocktail lounges and nature trails filled with changing foliage.',
+        url: '#',
+        link_title: 'READ MORE'
+      },
+      cards: [
+        { image_url: '', image_alt: '', title: 'Fall 2026: Must-See Shows in Washington, DC', description: 'Visit DC theaters for these can\'t-miss performances', url: '#', link_title: 'Read More' },
+        { image_url: '', image_alt: '', title: 'NMAAHC\'s 10th Anniversary', description: 'Discover special anniversary events.', url: '#', link_title: 'Read More' },
+        { image_url: '', image_alt: '', title: 'We The People: Explore DC Through Local Voices', description: 'A city shaped by vibrant neighborhoods.', url: '#', link_title: 'Read More' },
+        { image_url: '', image_alt: '', title: 'Guide to Exploring Embassies in Washington, DC', description: 'Embassies bring the world to DC.', url: '#', link_title: 'Read More' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/content-hub-featured/content-hub-featured.html.twig' with {
+      heading_icon_url: heading_icon_url,
+      heading_title: heading_title,
+      heading_link_url: heading_link_url,
+      heading_link_title: heading_link_title,
+      main_card: main_card,
+      cards: cards,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

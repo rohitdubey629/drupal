@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Presentational "Content Hub Banner" component.
+ *
+ * Pure component: takes plain variables, no Drupal entity awareness. This
+ * is what gets built/tested in Storybook isolation (via
+ * content-hub-banner.stories.twig, same folder) and reused as-is by the
+ * "content_hub_banner" block's wrapper template
+ * (block--block-content--type--content-hub-banner.html.twig), which is the
+ * only piece that knows about the block_content entity/fields.
+ *
+ * Variables:
+ * - image_url: Banner image URL (string).
+ * - image_alt: Banner image alt text (string).
+ * - title: Banner heading text (string).
+ * - attributes: Optional Attribute object for the root element (Drupal
+ *   blocks pass their block attributes through here; Storybook stories
+ *   simply omit it).
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('content-hub-banner') }}>
+  {{ title_suffix|default('') }}
+  <div class="content_hub_banner_image">
+    <picture class="image">
+      {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+        url: image_url,
+        alt: image_alt|default('Banner Image'),
+        image_class: 'image',
+      } only %}
+    </picture>
+    <div class="content_hub_banner_image_grad"></div>
+  </div>
+  {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+    tag: 'h1',
+    text: title,
+    variant: 'label',
+  } only %}
+</div>

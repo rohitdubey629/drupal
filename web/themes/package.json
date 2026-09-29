@@ -1,0 +1,23 @@
+{
+  "name": "themes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "storybook": "^10.6.0",
+    "@storybook/server-webpack5": "^10.6.0",
+    "@storybook/addon-webpack5-compiler-swc": "latest",
+    "@storybook/addon-a11y": "^10.6.0",
+    "@storybook/addon-docs": "^10.6.0",
+    "eslint-plugin-storybook": "^10.6.0"
+  }
+}

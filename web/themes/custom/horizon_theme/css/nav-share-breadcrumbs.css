@@ -1,0 +1,189 @@
+/**
+ * Horizon theme: Nav Share Breadcrumbs.
+ * Mirrors https://washington.org/visit-dc's row directly under the
+ * banner — a "Share This" toggle (opens a dropdown of platform icons) +
+ * a favorite star on the left, an uppercase breadcrumb trail on the right.
+ * Scoped accent color (--wdc-accent) matches that reference page's purple,
+ * kept local to this component rather than reusing the site's orange
+ * --horizon-accent.
+ */
+.nav-share-breadcrumbs {
+  --wdc-accent: #7d3269;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid color-mix(in srgb, var(--horizon-heading), transparent 92%);
+}
+
+@media (min-width: 768px) {
+  .nav-share-breadcrumbs {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+}
+
+.sharethis {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sharethis--title {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #757575;
+}
+
+.sharethis-toggle-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sharethis-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--wdc-accent);
+}
+
+.sharethis-toggle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sharethis-favorite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 12px;
+  color: var(--horizon-heading);
+}
+
+.sharethis-favorite svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Platform list stays hidden until revealed — on desktop, hovering the
+ * toggle wrapper reveals it directly (matches the reference site); on
+ * touch devices (no hover), js/script.js's click-to-toggle adds .is-open
+ * instead. */
+.sharethis-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 16px 40px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+}
+
+.sharethis-toggle-wrap:hover .sharethis-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sharethis-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sharethis-panel a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+  transition: background-color 0.2s ease-out;
+}
+
+.sharethis-panel a:hover {
+  background-color: var(--wdc-accent);
+}
+
+.sharethis-panel img,
+.sharethis-panel svg {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Hidden on mobile and tablet — visible on desktop only (1200px+). */
+.social--breadcrumb {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .social--breadcrumb {
+    display: block;
+  }
+}
+
+.social--breadcrumb .breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #666666;
+}
+
+.social--breadcrumb .breadcrumb__item::after {
+  content: '\276F';
+  margin-left: 0.4rem;
+  font-size: 15px;
+  color: #666666;
+}
+
+.social--breadcrumb .breadcrumb__item:last-child::after {
+  content: '';
+  margin: 0;
+}
+
+.social--breadcrumb .breadcrumb__item--current {
+  font-weight: 400;
+  color: #666666;
+}
+
+.social--breadcrumb .breadcrumb__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.social--breadcrumb .breadcrumb__link:hover {
+  color: var(--wdc-accent);
+}

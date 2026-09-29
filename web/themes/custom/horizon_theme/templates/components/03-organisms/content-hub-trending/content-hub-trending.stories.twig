@@ -1,0 +1,26 @@
+{% stories content_hub_trending with { title: 'Organisms/Content Hub Trending' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      heading_icon_url: '',
+      heading_title: 'Trending',
+      heading_link_url: '#',
+      heading_link_title: 'See All Trending',
+      cards: [
+        { image_url: '', image_alt: '', title: 'Guide to Washington Spirit Soccer in DC', description: 'Your complete guide to the Washington Spirit and Audi Field.', url: '#', link_title: 'Read More' },
+        { image_url: '', image_alt: '', title: '3 Days in Washington, DC for First-Timers', description: 'See the best of everything Washington, DC has to offer.', url: '#', link_title: 'Read More' },
+        { image_url: '', image_alt: '', title: 'Inspiring Public Parks & Gardens in Washington, DC', description: 'When it comes to parks and gardens, few cities can match DC.', url: '#', link_title: 'Read More' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/content-hub-trending/content-hub-trending.html.twig' with {
+      heading_icon_url: heading_icon_url,
+      heading_title: heading_title,
+      heading_link_url: heading_link_url,
+      heading_link_title: heading_link_title,
+      cards: cards,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

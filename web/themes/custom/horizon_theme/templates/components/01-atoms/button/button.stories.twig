@@ -1,0 +1,48 @@
+{# this is test case file for button component #}
+
+{% stories button with { title: 'Atoms/Button' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      url: '#',
+      label: 'Read More',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: url,
+      label: label,
+    } only %}
+  {% endstory %}
+
+  {% story large with {
+    name: '2. Large',
+    args: {
+      url: '#',
+      label: 'See All Featured',
+      size: 'large',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: url,
+      label: label,
+      size: size,
+    } only %}
+  {% endstory %}
+
+  {% story pill with {
+    name: '3. Pill (no rollover)',
+    args: {
+      url: '#',
+      label: 'This Week',
+      rollover: false,
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: url,
+      label: label,
+      rollover: rollover,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

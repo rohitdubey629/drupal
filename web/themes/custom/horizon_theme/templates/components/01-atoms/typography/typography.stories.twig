@@ -1,0 +1,65 @@
+{# this is test case file for typography component #}
+
+{% stories typography with { title: 'Atoms/Typography' } %}
+
+  {% story heading with {
+    name: '1. Section Heading (h2, label)',
+    args: {
+      tag: 'h2',
+      text: 'Trending',
+      variant: 'label',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+      tag: tag,
+      text: text,
+      variant: variant,
+    } only %}
+  {% endstory %}
+
+  {% story card_title with {
+    name: '2. Card Title (h3, label)',
+    args: {
+      tag: 'h3',
+      text: 'Cherry Blossoms in DC',
+      variant: 'label',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+      tag: tag,
+      text: text,
+      variant: variant,
+    } only %}
+  {% endstory %}
+
+  {% story paragraph with {
+    name: '3. Body Paragraph',
+    args: {
+      tag: 'p',
+      text: 'Explore the best of the District, from museums to monuments.',
+      variant: 'paragraph',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+      tag: tag,
+      text: text,
+      variant: variant,
+    } only %}
+  {% endstory %}
+
+  {% story stat_label with {
+    name: '4. Stat Label (span, label)',
+    args: {
+      tag: 'span',
+      text: 'Museums',
+      variant: 'label',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+      tag: tag,
+      text: text,
+      variant: variant,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

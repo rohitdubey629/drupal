@@ -1,0 +1,34 @@
+{% stories social_highlights with { title: 'Organisms/Social Highlights' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      items: [
+        { image_url: 'https://picsum.photos/seed/dc1/400/500', image_alt: 'DW Block Party, Oct. 3, Pennsylvania Ave', link_url: '#' },
+        { image_url: 'https://picsum.photos/seed/dc2/400/500', image_alt: '2026 National Women\'s Soccer League Championship, Nov. 21, Audi Field', link_url: '#' },
+        { image_url: 'https://picsum.photos/seed/dc3/400/500', image_alt: '2026 Banana Bowl Championship, Oct. 10, Nationals Park', link_url: '#' },
+        { image_url: 'https://picsum.photos/seed/dc4/400/500', image_alt: '2026 Washington, DC Fall Events & Festivals', link_url: '#' },
+        { image_url: 'https://picsum.photos/seed/dc5/400/500', image_alt: 'Adams Morgan Fall PorchFest, Oct. 3, Adams Morgan', link_url: '#' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/social-highlights/social-highlights.html.twig' with {
+      items: items,
+    } only %}
+  {% endstory %}
+
+  {% story with_video with {
+    name: '2. With video slide',
+    args: {
+      items: [
+        { video_url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', badge_text: 'This Is DC ❤️', link_url: '#' },
+        { image_url: 'https://picsum.photos/seed/dc1/400/500', image_alt: 'DW Block Party, Oct. 3, Pennsylvania Ave', link_url: '#' }
+      ]
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/social-highlights/social-highlights.html.twig' with {
+      items: items,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

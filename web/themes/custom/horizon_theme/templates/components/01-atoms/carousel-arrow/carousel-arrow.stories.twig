@@ -1,0 +1,31 @@
+{# this is test case file for carousel arrow component #}
+
+{% stories carousel_arrow with { title: 'Atoms/Carousel Arrow' } %}
+
+  {% story prev with {
+    name: '1. Previous',
+    args: {
+      direction: 'prev',
+      extra_class: 'content-hub-trending_arrow',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+      direction: direction,
+      extra_class: extra_class,
+    } only %}
+  {% endstory %}
+
+  {% story next with {
+    name: '2. Next',
+    args: {
+      direction: 'next',
+      extra_class: 'content-hub-trending_arrow',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+      direction: direction,
+      extra_class: extra_class,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

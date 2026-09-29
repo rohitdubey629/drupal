@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override for the "Load more" infinite scroll pager.
+ *
+ * Adds the decorative vertical line + star above the button, matching the
+ * reference design. Overrides the module's default template globally since
+ * this is the only view using the infinite scroll pager.
+ */
+#}
+{% if items.next %}
+<div{{ attributes.addClass('filter-by-articles_pager') }}>
+  <div class="filter-by-articles_pager-divider" aria-hidden="true">
+    <span class="filter-by-articles_pager-line"></span>
+    <span class="filter-by-articles_pager-star">&#9733;</span>
+  </div>
+  <a class="btn btn--outline filter-by-articles_pager-button" href="{{ items.next.href }}" title="{{ 'Load more items'|t }}" rel="next">
+    <span class="button__inner-rollover-text">{{ options.button_text }}</span>
+  </a>
+</div>
+{% endif %}

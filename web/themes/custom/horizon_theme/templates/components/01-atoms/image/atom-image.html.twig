@@ -1,0 +1,21 @@
+{# this is the presentational component file for the image atom #}
+{#
+/**
+ * @file
+ * Presentational "Image" atom — reusable <img> element.
+ *
+ * Covers every repeated <img> pattern across the washington-hub
+ * organisms/molecule: card photos (class="image"), small heading icons
+ * (class="icon", empty alt), and the callers that need no class at all
+ * (Filter By Articles Card, Nav Share Breadcrumbs' social icons).
+ *
+ * Variables:
+ * - url: image src (string, required).
+ * - alt: alt text (string, default '').
+ * - image_class: CSS class on the <img> (string, default ''). Omit or
+ *   pass '' when no class is wanted.
+ * - loading: 'lazy' | 'eager' (string, optional) — adds the loading
+ *   attribute when set (Nav Share Breadcrumbs uses lazy).
+ */
+#}
+<img{% if image_class %} class="{{ image_class }}"{% endif %} src="{{ url }}" alt="{{ alt|default('') }}"{% if loading %} loading="{{ loading }}"{% endif %}>

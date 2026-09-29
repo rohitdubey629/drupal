@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * Presentational "Choose Your Interest" component.
+ *
+ * Pure component: plain variables only, no Drupal entity awareness — same
+ * pattern as the Content Hub Banner / Nav Share Breadcrumbs components.
+ *
+ * Variables:
+ * - heading: section heading text (string), e.g. "CHOOSE YOUR INTEREST".
+ * - items: list of { icon_url, icon_alt, label, anchor }. `anchor` is the
+ *   target section id (without "#") the item scroll-links to.
+ * - attributes: optional Attribute object for the root element.
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('choose-block') }}>
+  {{ title_suffix|default('') }}
+  <div class="container">
+
+    {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+      tag: 'h5',
+      text: heading,
+      variant: 'label',
+    } only %}
+
+    <div class="choose-block_items">
+      {% for item in items %}
+        <a href="#{{ item.anchor }}" class="scroll-link">
+          <div class="choose-block_items__item">
+            {% if item.icon_url %}
+              {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+                url: item.icon_url,
+                alt: item.icon_alt|default(item.label),
+                image_class: 'image',
+              } only %}
+            {% endif %}
+            {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+              tag: 'h4',
+              text: item.label,
+              variant: 'label',
+            } only %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>

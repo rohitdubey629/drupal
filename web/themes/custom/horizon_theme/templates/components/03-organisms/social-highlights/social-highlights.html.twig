@@ -1,0 +1,52 @@
+{#
+/**
+ * Presentational component: Social Highlights carousel.
+ * `items`: [{ image_url, image_alt, badge_text, date, location, link_url }]
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('social-highlights', 'washington-section') }}>
+  {{ title_suffix|default('') }}
+<div class="social-highlights_carousel container">
+  <div class="social-highlights_track">
+    {% for item in items %}
+      <a class="social-highlights_slide" href="{{ item.link_url|default('#') }}">
+        {% if item.video_url %}
+          {% include '@horizon_theme/components/01-atoms/video/video.html.twig' with {
+            url: item.video_url,
+            video_class: 'image js-social-video',
+          } only %}
+        {% elseif item.image_url %}
+          {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+            url: item.image_url,
+            alt: item.image_alt|default(item.badge_text)|default(''),
+            image_class: 'image',
+          } only %}
+        {% endif %}
+        <span class="social-highlights_slide__top-bar">
+          <span class="social-highlights_slide__ig" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>
+          </span>
+          {% if item.badge_text %}
+            <span class="social-highlights_slide__caption">{{ item.badge_text }}</span>
+          {% endif %}
+          {% if item.video_url %}
+            <button type="button" class="social-highlights_slide__play-toggle js-social-play-toggle" data-state="playing" aria-label="{{ 'Pause video'|t }}">
+              <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="white"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>
+              <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M6 4l14 8-14 8V4z"/></svg>
+            </button>
+          {% endif %}
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+  <div class="social-highlights_dots"></div>
+  <div class="social-highlights_arrows">
+    <button type="button" class="social-highlights_arrow social-highlights_arrow--prev" aria-label="Previous">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" class="social-highlights_arrow social-highlights_arrow--next" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+</div>

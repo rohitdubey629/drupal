@@ -1,0 +1,33 @@
+{% stories content_hub_banner with { title: 'Organisms/Content Hub Banner' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      image_url: 'https://washington.org/sites/default/files/styles/webp/public/2025-03/Lincoln%20Memorial%20-%20Summer%20-%20Stock_0.jpg.webp',
+      image_alt: 'Lincoln Memorial, summer',
+      title: 'The District Blog'
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/content-hub-banner/content-hub-banner.html.twig' with {
+      image_url: image_url,
+      image_alt: image_alt,
+      title: title
+    } only %}
+  {% endstory %}
+
+  {% story long_title with {
+    name: '2. Long title',
+    args: {
+      image_url: 'https://washington.org/sites/default/files/styles/webp/public/2025-03/Lincoln%20Memorial%20-%20Summer%20-%20Stock_0.jpg.webp',
+      image_alt: 'Lincoln Memorial, summer',
+      title: 'Everything Happening in Washington, DC This Season'
+    }
+  } %}
+    {% include '@horizon_theme/components/03-organisms/content-hub-banner/content-hub-banner.html.twig' with {
+      image_url: image_url,
+      image_alt: image_alt,
+      title: title
+    } only %}
+  {% endstory %}
+
+{% endstories %}

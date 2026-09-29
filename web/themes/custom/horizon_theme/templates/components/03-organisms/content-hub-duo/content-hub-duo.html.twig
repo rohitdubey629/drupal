@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Presentational "Content Hub Duo" component.
+ *
+ * Two side-by-side category cards (e.g. "Things to Do" / "Itineraries")
+ * — each has its own heading (icon + title) and one large card below it.
+ * A card's body has TWO variants, picked automatically by how many links
+ * it has:
+ * - 1 link -> description text + a single outlined button (Itineraries).
+ * - 2+ links -> a 2x2 grid of pill buttons instead of description
+ *   (Things to Do: "This Week" / "This Weekend" / "This Month" / "See All").
+ *
+ * Pure component: plain variables only, no Drupal entity awareness — same
+ * pattern as the other content-hub components.
+ *
+ * Variables:
+ * - items: list of {
+ *     heading_icon_url, heading_title,
+ *     card_image_url, card_image_alt, card_title, card_description,
+ *     links: list of { url, title }
+ *   }
+ * - attributes: optional Attribute object for the root element.
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('content-hub-duo', 'washington-section') }}>
+  {{ title_suffix|default('') }}
+  <div class="content-hub-duo_grid container">
+    {% for item in items %}
+      <div class="content-hub-duo_item">
+
+        <div class="content-hub-duo_item__heading">
+          {% if item.heading_icon_url %}
+            {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+              url: item.heading_icon_url,
+              image_class: 'icon',
+            } only %}
+          {% endif %}
+          {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+            tag: 'h2',
+            text: item.heading_title,
+            variant: 'label',
+          } only %}
+        </div>
+
+        <div class="content-hub-duo-card">
+          {% if item.card_image_url %}
+            {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+              url: item.card_image_url,
+              alt: item.card_image_alt|default(item.card_title),
+              image_class: 'image',
+            } only %}
+          {% endif %}
+          <div class="content-hub-duo-card_body">
+            {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+              tag: 'h3',
+              text: item.card_title,
+              variant: 'label',
+            } only %}
+
+            {% if item.links|length > 1 %}
+              <div class="content-hub-duo-card_pills">
+                {% for link in item.links %}
+                  {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+                    url: link.url,
+                    label: link.title,
+                    rollover: false,
+                  } only %}
+                {% endfor %}
+              </div>
+            {% else %}
+              {% if item.card_description %}
+                {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+                  tag: 'p',
+                  text: item.card_description,
+                  variant: 'paragraph',
+                } only %}
+              {% endif %}
+              {% if item.links|length == 1 %}
+                {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+                  url: item.links.0.url,
+                  label: item.links.0.title,
+                  rollover: false,
+                } only %}
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>

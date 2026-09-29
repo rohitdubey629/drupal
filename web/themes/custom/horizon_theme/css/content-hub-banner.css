@@ -1,0 +1,75 @@
+/**
+ * Horizon theme: Content Hub Banner.
+ * Mirrors https://washington.org/visit-dc "The District Blog" banner —
+ * full-bleed image, dark gradient fading up from the bottom, large white
+ * title sitting on top of the gradient.
+ *
+ * Heights/font-sizes below are measured directly off the live site
+ * (computed styles), not guessed: 255px/39px on mobile, 470px/70px on
+ * tablet, 288px/70px on desktop — the real site's own breakpoints aren't
+ * monotonic in height (different image crops per breakpoint), so ours
+ * matches that exactly rather than "smoothing" the progression.
+ */
+.content-hub-banner {
+  position: relative;
+  width: 100%;
+  height: 255px;
+  overflow: hidden;
+}
+
+.content_hub_banner_image {
+  position: absolute;
+  inset: 0;
+}
+
+.content_hub_banner_image img.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content_hub_banner_image_grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14, 14, 16, 0.85) 0%, rgba(14, 14, 16, 0.15) 55%, rgba(14, 14, 16, 0) 100%);
+}
+
+.content-hub-banner .label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  margin: 0;
+  padding: 0 var(--gutter);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  color: #ffffff;
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 39px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+@media (min-width: 768px) {
+  .content-hub-banner {
+    height: 470px;
+  }
+
+  .content-hub-banner .label {
+    bottom: 48px;
+    font-size: 70px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-hub-banner {
+    height: 288px;
+  }
+
+  .content-hub-banner .label {
+    bottom: 24px;
+    font-size: 70px;
+  }
+}

@@ -12,6 +12,25 @@ function horizon_theme_preprocess_html(array &$variables) {
 }
 
 /**
+ * Implements hook_form_alter().
+ *
+ * The "Filter By Articles" Interests/Season dropdowns should read as
+ * "Interests" / "Season" in their unselected state (matching the reference
+ * design), not the generic "- Any -" Views prints by default — Views has no
+ * exposed-filter setting for this, so the option text is rewritten here.
+ */
+function horizon_theme_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (str_starts_with($form_id, 'views_exposed_form') && ($form['#id'] ?? '') === 'views-exposed-form-filter-by-articles-block-1') {
+    if (isset($form['interests']['#options']['All'])) {
+      $form['interests']['#options']['All'] = t('Interests');
+    }
+    if (isset($form['season']['#options']['All'])) {
+      $form['season']['#options']['All'] = t('Season');
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_page().
  */
 function horizon_theme_preprocess_page(array &$variables) {
@@ -40,6 +59,16 @@ function horizon_theme_preprocess_node(array &$variables) {
  * Implements hook_preprocess_block().
  */
 function horizon_theme_preprocess_block(array &$variables) {
+  // The "Filter By Articles" view block renders its own "Filter By" heading
+  // (with icon) inside the exposed form template, matching the reference
+  // design — so the generic Views block title must never show on top of it,
+  // no matter how an editor places the block (this overrides the per-
+  // placement "Display title" checkbox rather than relying on editors to
+  // remember to uncheck it).
+  if (($variables['plugin_id'] ?? '') === 'views_block:filter_by_articles-block_1') {
+    $variables['label'] = '';
+  }
+
   // The Contact Section block has no field for the form itself — it's not
   // content that belongs in a field, it's a Webform (the "Contact Form"
   // webform, machine name `contact_form`), attached here so the template
@@ -51,6 +80,30 @@ function horizon_theme_preprocess_block(array &$variables) {
     if ($webform) {
       $variables['content']['contact_form'] = $webform->getSubmissionForm();
     }
+  }
+
+  // The Nav Share Breadcrumbs block has no field for the breadcrumb trail —
+  // it's not editable content, it's Drupal's own breadcrumb for whatever
+  // page this block happens to render on, so it's built here the same way
+  // the contact form is attached above.
+  if ($block_content && $block_content->bundle() === 'nav_share_breadcrumbs') {
+    $links = \Drupal::service('breadcrumb')
+      ->build(\Drupal::routeMatch())
+      ->getLinks();
+    $variables['content']['breadcrumb_links'] = array_map(
+      fn ($link) => [
+        'text' => $link->getText(),
+        'url' => $link->getUrl()->toString(),
+      ],
+      $links
+    );
+    // Add the current page itself as the trail's last, non-linked crumb —
+    // Drupal's breadcrumb service only returns the ancestors, not the
+    // current page.
+    $variables['content']['breadcrumb_links'][] = [
+      'text' => \Drupal::routeMatch()->getParameter('node')?->label() ?? \Drupal::title(),
+      'url' => NULL,
+    ];
   }
 
   // The Footer About block repeats the "Horizon." site name/logo already

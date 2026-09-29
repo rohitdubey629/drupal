@@ -1,0 +1,159 @@
+/**
+ * Horizon theme: Content Hub Duo.
+ * Two side-by-side category cards (e.g. "Things to Do" / "Itineraries")
+ * — single column on mobile/tablet, side-by-side on desktop (992px+).
+ */
+.content-hub-duo {
+  --wdc-plum: #7d3269;
+
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.content-hub-duo_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 992px) {
+  .content-hub-duo_grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+.content-hub-duo_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-hub-duo_item__heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.content-hub-duo_item__heading .icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.content-hub-duo_item__heading .label {
+  margin: 0;
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.31;
+  color: var(--horizon-heading);
+}
+
+.content-hub-duo-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.content-hub-duo-card img.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.51 / 1;
+  object-fit: cover;
+}
+
+/* Lifts over the image instead of sitting flush below it — see
+ * content-hub-trending.css's identical rule for the reference-screenshot
+ * measurement this is based on. */
+.content-hub-duo-card_body {
+  position: relative;
+  z-index: 1;
+padding: 32px;
+  margin-top: -32px;
+  margin-right: 24px;
+  background: #ffffff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 10, 0.05), 0 20px 20px -10px rgba(0, 0, 10, 0.1);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content-hub-duo-card_body .label {
+  margin: 0;
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.22;
+  color: var(--horizon-heading);
+}
+
+@media (min-width: 768px) {
+  .content-hub-duo-card_body .label {
+    font-size: 30px;
+    line-height: 1.33;
+  }
+}
+
+.content-hub-duo-card_body .wdc-paragraph {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgb(77, 77, 77);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .content-hub-duo-card_body .wdc-paragraph {
+    font-size: 21px;
+  }
+}
+
+.content-hub-duo .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border: 2px solid var(--wdc-plum);
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--wdc-plum);
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.content-hub-duo .btn:hover,
+.content-hub-duo .btn:hover:hover {
+  background-color: var(--wdc-plum);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.content-hub-duo-card_body .btn {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* Pill-button variant (2x2 grid) instead of description + single button. */
+.content-hub-duo-card_pills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.content-hub-duo-card_pills .btn {
+  width: 100%;
+  padding: 12px 16px;
+}

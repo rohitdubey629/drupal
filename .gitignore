@@ -42,3 +42,6 @@ Thumbs.db
 
 # Env files.
 .env
+
+*storybook.log
+storybook-static

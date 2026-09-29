@@ -1,0 +1,105 @@
+{#
+/**
+ * @file
+ * Presentational "Content Hub Trending" component.
+ *
+ * Unlike Content Hub Featured (main card + 2x2 grid on desktop), Trending
+ * is a scroll-snap carousel at EVERY breakpoint — desktop just shows more
+ * cards at once (~3.3 peeking) with vertically-stacked arrows on the left;
+ * tablet/mobile show fewer cards with arrows centered below, matching
+ * https://washington.org/visit-dc's actual "Trending" section exactly
+ * (not a re-skinned Featured section).
+ *
+ * Variables:
+ * - heading_icon_url: heading's icon image URL (string).
+ * - heading_title: heading text (string), e.g. "Trending".
+ * - heading_link_url / heading_link_title: the "See All Trending" CTA.
+ * - cards: list of { image_url, image_alt, title, description, url, link_title }.
+ * - attributes: optional Attribute object for the root element.
+ */
+#}
+<div{{ (attributes|default(create_attribute())).addClass('content-hub-trending', 'washington-section') }}>
+  {{ title_suffix|default('') }}
+
+  <div class="content-hub-trending_heading container">
+    <div class="content-hub-trending_heading__title">
+      {% if heading_icon_url %}
+        {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+          url: heading_icon_url,
+          image_class: 'icon',
+        } only %}
+      {% endif %}
+      {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+        tag: 'h2',
+        text: heading_title,
+        variant: 'label',
+      } only %}
+    </div>
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: heading_link_url,
+      label: heading_link_title,
+      size: 'large',
+    } only %}
+  </div>
+
+  <div class="content-hub-trending_carousel">
+    <div class="content-hub-trending_arrows content-hub-trending_arrows--start">
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'prev',
+        extra_class: 'content-hub-trending_arrow js-trending-prev',
+      } only %}
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'next',
+        extra_class: 'content-hub-trending_arrow js-trending-next',
+      } only %}
+    </div>
+
+    <div class="content-hub-trending_track js-trending-track container">
+      {% for c in cards %}
+        <div class="content-hub-trending_item">
+          <div class="content-hub-trending-card">
+            <a class="content_hub_featured_card_link" href="{{ c.url }}" aria-label="Link">
+              {% if c.image_url %}
+                {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+                  url: c.image_url,
+                  alt: c.image_alt|default(c.title),
+                  image_class: 'image',
+                } only %}
+              {% endif %}
+            </a>
+            <div class="content-hub-trending-card_body">
+              <a class="content_hub_featured_card_link" href="{{ c.url }}" aria-label="Link">
+                {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+                  tag: 'h3',
+                  text: c.title,
+                  variant: 'label',
+                } only %}
+                {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+                  tag: 'p',
+                  text: c.description,
+                  variant: 'paragraph',
+                } only %}
+              </a>
+              {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+                url: c.url,
+                label: c.link_title|default('Read More'),
+              } only %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="content-hub-trending_arrows content-hub-trending_arrows--below">
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'prev',
+        extra_class: 'content-hub-trending_arrow js-trending-prev',
+      } only %}
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'next',
+        extra_class: 'content-hub-trending_arrow js-trending-next',
+      } only %}
+    </div>
+  </div>
+
+</div>

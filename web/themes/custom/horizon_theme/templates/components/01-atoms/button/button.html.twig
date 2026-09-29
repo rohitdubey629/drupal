@@ -1,0 +1,28 @@
+{# this is the presentational component file for the button atom #}
+{#
+/**
+ * @file
+ * Presentational "Button" atom — reusable outline CTA link.
+ *
+ * Used by the Content Hub Duo / Featured / Trending organisms and the
+ * Filter By Articles Card molecule. Two variants exist in those
+ * components: a plain-text pill (Content Hub Duo) and a "rollover text"
+ * button (everywhere else, animated on hover via CSS). `rollover`
+ * switches between them so this one atom covers both without duplicating
+ * markup.
+ *
+ * Variables:
+ * - url: link href (string).
+ * - label: button text (string).
+ * - size: '' | 'large' — adds the btn--large modifier.
+ * - rollover: bool (default true) — wraps label in the
+ *   button__inner-rollover-text span used by the hover animation.
+ */
+#}
+<a class="btn btn--outline{{ size ? ' btn--' ~ size : '' }}" href="{{ url }}">
+  {% if rollover|default(true) %}
+    <span class="button__inner-rollover-text">{{ label }}</span>
+  {% else %}
+    {{ label }}
+  {% endif %}
+</a>

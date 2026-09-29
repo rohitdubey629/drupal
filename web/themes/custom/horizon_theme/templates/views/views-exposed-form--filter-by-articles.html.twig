@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Theme override for the "Filter By Articles" exposed filter form.
+ *
+ * Renders the "Filter By" heading (with icon) and the Interests/Season
+ * dropdowns in a single header row, matching the reference design. The
+ * dropdowns auto-submit on change (Better Exposed Filters), so no visible
+ * Apply button is rendered here.
+ *
+ * `form` is the pre-built form render array (widgets, hidden fields, etc.);
+ * the real <form> tag is already rendered one level up by the 'form' theme
+ * hook, so this template must NOT add another one.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+{% if q is not empty %}
+{{ q }}
+{% endif %}
+<div class="filter-by-articles_header container">
+  <div class="filter-by-articles_heading">
+    <svg class="filter-by-articles_heading__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="16" rx="1"/>
+      <path d="M7 8h4v4H7zM13 8h4M13 12h4M7 16h10"/>
+    </svg>
+    <h2 class="filter-by-articles_heading__label">{{ 'Filter By'|t }}</h2>
+  </div>
+
+  <div class="filter-by-articles_filters">
+    {{ form }}
+  </div>
+</div>

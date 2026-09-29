@@ -1,0 +1,15 @@
+{# this is the presentational component file for the video atom #}
+{#
+/**
+ * @file
+ * Presentational "Video" atom — reusable inline <video> element.
+ *
+ * Used by Social Highlights for its video slides: autoplay, muted,
+ * looping, no controls (Instagram-Reel-style card format).
+ *
+ * Variables:
+ * - url: video src (string, required).
+ * - video_class: CSS class on the <video> (string, default '').
+ */
+#}
+<video{% if video_class %} class="{{ video_class }}"{% endif %} src="{{ url }}" autoplay muted loop playsinline></video>

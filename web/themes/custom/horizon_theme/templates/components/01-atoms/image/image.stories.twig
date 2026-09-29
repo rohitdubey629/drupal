@@ -1,0 +1,46 @@
+{# this is test case file for image component #}
+
+{% stories image with { title: 'Atoms/Image' } %}
+
+  {% story photo with {
+    name: '1. Photo (class="image")',
+    args: {
+      url: 'https://picsum.photos/seed/dc1/400/500',
+      alt: 'Sample photo',
+      image_class: 'image',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+      url: url,
+      alt: alt,
+      image_class: image_class,
+    } only %}
+  {% endstory %}
+
+  {% story icon with {
+    name: '2. Icon (class="icon", no alt)',
+    args: {
+      url: 'https://washington.org/favicon.ico',
+      image_class: 'icon',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+      url: url,
+      image_class: image_class,
+    } only %}
+  {% endstory %}
+
+  {% story lazy with {
+    name: '3. Lazy-loaded (no class)',
+    args: {
+      url: 'https://washington.org/favicon.ico',
+      loading: 'lazy',
+    }
+  } %}
+    {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+      url: url,
+      loading: loading,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

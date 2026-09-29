@@ -23,6 +23,14 @@ global-styling:
       css/cards.css: {}
       css/footer.css: {}
       css/navigation.css: {}
+      css/content-hub-banner.css: {}
+      css/nav-share-breadcrumbs.css: {}
+      css/choose-your-interest.css: {}
+      css/content-hub-featured.css: {}
+      css/content-hub-trending.css: {}
+      css/content-hub-duo.css: {}
+      css/social-highlights.css: {}
+      css/filter-by-articles.css: {}
   js:
     js/script.js: {}
   dependencies:
@@ -35,4 +43,4 @@ editorial-font:
   version: 1.x
   css:
     theme:
-      https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap: { type: external }
+      https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap: { type: external }

@@ -1,0 +1,120 @@
+{#
+/**
+ * @file
+ * Presentational "Content Hub Featured" component.
+ *
+ * Pure component: plain variables only, no Drupal entity awareness — same
+ * pattern as the other content-hub components. One card macro is reused
+ * for the main card, the small card list, and the mobile carousel, so
+ * there's exactly one place that defines what a "card" looks like.
+ *
+ * Variables:
+ * - heading_icon_url: heading's icon image URL (string).
+ * - heading_title: heading text (string), e.g. "Featured".
+ * - heading_link_url / heading_link_title: the "See All Featured" CTA.
+ * - main_card: { image_url, image_alt, title, description, url, link_title }.
+ * - cards: list of the same shape as main_card — the smaller cards.
+ * - attributes: optional Attribute object for the root element.
+ *
+ * The `is_main` flag on the card macro is what the reference actually
+ * does: only the big main card shows a description — the small cards
+ * (both the 2x2 desktop grid and the mobile carousel) show title + button
+ * only. This is decided here, once, rather than hiding it with CSS on the
+ * desktop grid only (which left it showing on the mobile carousel).
+ */
+#}
+{% macro card(c, is_main) %}
+  <div class="content-hub-featured-card">
+    <a class="content_hub_featured_card_link" href="{{ c.url }}" aria-label="Link">
+      {% if c.image_url %}
+        {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+          url: c.image_url,
+          alt: c.image_alt|default(c.title),
+          image_class: 'image',
+        } only %}
+      {% endif %}
+    </a>
+    <div class="content-hub-featured-card_body">
+      <a class="content_hub_featured_card_link" href="{{ c.url }}" aria-label="Link">
+        {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+          tag: 'h3',
+          text: c.title,
+          variant: 'label',
+        } only %}
+        {% if is_main %}
+          {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+            tag: 'p',
+            text: c.description,
+            variant: 'paragraph',
+          } only %}
+        {% endif %}
+      </a>
+      {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+        url: c.url,
+        label: c.link_title|default('Read More'),
+      } only %}
+    </div>
+  </div>
+{% endmacro %}
+
+<div{{ (attributes|default(create_attribute())).addClass('content-hub-featured', 'washington-section') }}>
+  {{ title_suffix|default('') }}
+
+  <div class="content-hub-featured_item1 container">
+    <div class="content-hub-featured_item1__child1">
+      {% if heading_icon_url %}
+        {% include '@horizon_theme/components/01-atoms/image/atom-image.html.twig' with {
+          url: heading_icon_url,
+          image_class: 'icon',
+        } only %}
+      {% endif %}
+      {% include '@horizon_theme/components/01-atoms/typography/typography.html.twig' with {
+        tag: 'h2',
+        text: heading_title,
+        variant: 'label',
+      } only %}
+    </div>
+    {% include '@horizon_theme/components/01-atoms/button/button.html.twig' with {
+      url: heading_link_url,
+      label: heading_link_title,
+      size: 'large',
+    } only %}
+  </div>
+
+  <div class="content-hub-featured_item2 container">
+    <div class="content-hub-featured_item2__child1">
+      {{ _self.card(main_card, true) }}
+    </div>
+    <div class="content-hub-featured_item2__child2">
+      {% for c in cards %}
+        <div class="content_hub_featured_item2__child2___item">
+          {{ _self.card(c) }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# Tablet/mobile: same cards (main + small), one continuous scroll-snap
+     track instead of a JS carousel library — same technique as the
+     Testimonials section. Prev/next just scroll the track by one card
+     width (js/script.js), the browser's native scroll-snap does the rest. #}
+  <div class="content-hub-featured_mobile container">
+    <div class="content-hub-featured_mobile_track js-featured-track">
+      <div class="content-hub-featured_mobile_item">{{ _self.card(main_card, true) }}</div>
+      {% for c in cards %}
+        <div class="content-hub-featured_mobile_item">{{ _self.card(c) }}</div>
+      {% endfor %}
+    </div>
+    <div class="content-hub-featured_arrows">
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'prev',
+        extra_class: 'content-hub-featured_arrow js-featured-prev',
+      } only %}
+      {% include '@horizon_theme/components/01-atoms/carousel-arrow/carousel-arrow.html.twig' with {
+        direction: 'next',
+        extra_class: 'content-hub-featured_arrow js-featured-next',
+      } only %}
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Theme override for the "Filter By Articles" row list.
+ *
+ * Wraps the rows (each themed by views-view-fields--filter-by-articles) in
+ * a two-column card grid, matching the reference design.
+ */
+#}
+<div class="filter-by-articles_grid container">
+  {% for row in rows %}
+    <div{{ row.attributes.addClass('filter-by-articles_grid-item') }}>
+      {{- row.content -}}
+    </div>
+  {% endfor %}
+</div>

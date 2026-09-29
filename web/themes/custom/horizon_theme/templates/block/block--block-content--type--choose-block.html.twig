@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for the "Choose Block" custom block bundle.
+ *
+ * `section` is the raw block_content entity, read directly for
+ * `field_title` and looped for `field_items` (Choose Interest Item
+ * paragraphs: field_icon media + field_label) — same technique as the
+ * Contact Section's info items.
+ *
+ * There's no separate "anchor" field on the paragraph — the scroll-link
+ * target is derived from the label itself (lowercased, trimmed,
+ * spaces/apostrophes stripped to dashes), e.g. "What's New" -> "whats-new".
+ */
+#}
+{% set section = content['#block_content'] %}
+{% set items = [] %}
+{% for item in section.field_items %}
+  {% set entry = item.entity %}
+  {% if entry %}
+    {% set has_icon = entry.field_icon.target_id %}
+    {% set icon = entry.field_icon.entity %}
+    {% set label = (entry.field_label.value|default(''))|trim %}
+    {% set items = items|merge([{
+      icon_url: has_icon ? file_url(icon.field_media_image.entity.uri.value) : '',
+      icon_alt: has_icon ? icon.field_media_image.0.alt : '',
+      label: label,
+      anchor: label|lower|replace({"'": '', ' ': '-'}),
+    }]) %}
+  {% endif %}
+{% endfor %}
+
+{% include '@horizon_theme/components/03-organisms/choose-your-interest/choose-your-interest.html.twig' with {
+  attributes: attributes,
+  title_suffix: title_suffix,
+  heading: section.field_title.value,
+  items: items,
+} only %}

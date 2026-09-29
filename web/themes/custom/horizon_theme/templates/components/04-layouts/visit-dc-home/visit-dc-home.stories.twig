@@ -1,0 +1,113 @@
+{% stories visit_dc_home with { title: 'Layouts/Visit DC Home' } %}
+
+  {% story default with {
+    name: '1. Default',
+    args: {
+      banner: {
+        image_url: 'https://washington.org/sites/default/files/styles/webp/public/2025-03/Lincoln%20Memorial%20-%20Summer%20-%20Stock_0.jpg.webp',
+        image_alt: 'Lincoln Memorial, summer',
+        title: 'The District Blog'
+      },
+      nav_share_breadcrumbs: {
+        share_label: 'Share This',
+        social_links: [
+          { icon_url: 'https://washington.org/favicon.ico', icon_alt: 'Facebook', url: '#facebook', label: 'Facebook' },
+          { icon_url: 'https://washington.org/favicon.ico', icon_alt: 'Pinterest', url: '#pinterest', label: 'Pinterest' }
+        ],
+        breadcrumb_links: [
+          { text: 'Home', url: '/' },
+          { text: 'Visit DC', url: '' }
+        ]
+      },
+      choose_your_interest: {
+        heading: 'CHOOSE YOUR INTEREST',
+        items: [
+          { icon_url: '', icon_alt: 'Featured', label: 'Featured', anchor: 'featured' },
+          { icon_url: '', icon_alt: 'Trending', label: 'Trending', anchor: 'trending' },
+          { icon_url: '', icon_alt: 'What\'s New', label: 'What\'s New', anchor: 'whats-new' },
+          { icon_url: '', icon_alt: 'Places to Eat', label: 'Places to Eat', anchor: 'places-to-eat' }
+        ]
+      },
+      content_hub_featured: {
+        heading_icon_url: '',
+        heading_title: 'Featured',
+        heading_link_url: '#',
+        heading_link_title: 'See All Featured',
+        main_card: {
+          image_url: 'https://washington.org/sites/default/files/styles/get_the_most_out_of_dc_517_x_322/public/2025-08/LincolnMemorial_006_7406015_20221101.jpg.webp',
+          image_alt: 'Lincoln Memorial',
+          title: '3-Day Itinerary for the Perfect Fall Getaway in Washington, DC',
+          description: 'Plan a spectacular fall-inspired trip with this DC itinerary full of spooky tours, cozy cocktail lounges and nature trails filled with changing foliage.',
+          url: '#',
+          link_title: 'READ MORE'
+        },
+        cards: [
+          { image_url: '', image_alt: '', title: 'Fall 2026: Must-See Shows in Washington, DC', description: 'Visit DC theaters for these can\'t-miss performances', url: '#', link_title: 'Read More' },
+          { image_url: '', image_alt: '', title: 'NMAAHC\'s 10th Anniversary', description: 'Discover special anniversary events.', url: '#', link_title: 'Read More' },
+          { image_url: '', image_alt: '', title: 'We The People: Explore DC Through Local Voices', description: 'A city shaped by vibrant neighborhoods.', url: '#', link_title: 'Read More' },
+          { image_url: '', image_alt: '', title: 'Guide to Exploring Embassies in Washington, DC', description: 'Embassies bring the world to DC.', url: '#', link_title: 'Read More' }
+        ]
+      },
+      content_hub_trending: {
+        heading_icon_url: '',
+        heading_title: 'Trending',
+        heading_link_url: '#',
+        heading_link_title: 'See All Trending',
+        cards: [
+          { image_url: '', image_alt: '', title: 'Guide to Washington Spirit Soccer in DC', description: 'Your complete guide to the Washington Spirit and Audi Field.', url: '#', link_title: 'Read More' },
+          { image_url: '', image_alt: '', title: '3 Days in Washington, DC for First-Timers', description: 'See the best of everything Washington, DC has to offer.', url: '#', link_title: 'Read More' },
+          { image_url: '', image_alt: '', title: 'Inspiring Public Parks & Gardens in Washington, DC', description: 'When it comes to parks and gardens, few cities can match DC.', url: '#', link_title: 'Read More' }
+        ]
+      },
+      content_hub_duo: {
+        items: [
+          {
+            heading_icon_url: '',
+            heading_title: 'Things to Do',
+            card_image_url: '',
+            card_image_alt: '',
+            card_title: 'Find Things to Do',
+            card_description: '',
+            links: [
+              { url: '#', title: 'This Week' },
+              { url: '#', title: 'This Weekend' },
+              { url: '#', title: 'This Month' },
+              { url: '#', title: 'See All Things to Do' }
+            ]
+          },
+          {
+            heading_icon_url: '',
+            heading_title: 'Itineraries',
+            card_image_url: '',
+            card_image_alt: '',
+            card_title: 'Ultimate Itineraries',
+            card_description: 'Monuments and memorials, eclectic neighborhoods, America\'s best restaurant city, true local flavor.',
+            links: [
+              { url: '#', title: 'See All Itineraries' }
+            ]
+          }
+        ]
+      },
+      social_highlights: {
+        items: [
+          { image_url: 'https://picsum.photos/seed/dc1/400/500', image_alt: 'DW Block Party, Oct. 3, Pennsylvania Ave', link_url: '#' },
+          { image_url: 'https://picsum.photos/seed/dc2/400/500', image_alt: '2026 National Women\'s Soccer League Championship, Nov. 21, Audi Field', link_url: '#' },
+          { image_url: 'https://picsum.photos/seed/dc3/400/500', image_alt: '2026 Banana Bowl Championship, Oct. 10, Nationals Park', link_url: '#' },
+          { image_url: 'https://picsum.photos/seed/dc4/400/500', image_alt: '2026 Washington, DC Fall Events & Festivals', link_url: '#' },
+          { image_url: 'https://picsum.photos/seed/dc5/400/500', image_alt: 'Adams Morgan Fall PorchFest, Oct. 3, Adams Morgan', link_url: '#' }
+        ]
+      }
+    }
+  } %}
+    {% include '@horizon_theme/components/04-layouts/visit-dc-home/visit-dc-home.html.twig' with {
+      banner: banner,
+      nav_share_breadcrumbs: nav_share_breadcrumbs,
+      choose_your_interest: choose_your_interest,
+      content_hub_featured: content_hub_featured,
+      content_hub_trending: content_hub_trending,
+      content_hub_duo: content_hub_duo,
+      social_highlights: social_highlights,
+    } only %}
+  {% endstory %}
+
+{% endstories %}

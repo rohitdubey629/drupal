@@ -275,4 +275,289 @@
     }
   };
 
+  // Share This toggle: click opens/closes the dropdown of platform icons;
+  // clicking outside or pressing Escape closes it again.
+  Drupal.behaviors.horizonShareToggle = {
+    attach: function (context) {
+      once('horizon-share-toggle', '.js-share-toggle', context).forEach(function (toggle) {
+        var panel = toggle.closest('.sharethis-toggle-wrap').querySelector('.js-share-panel');
+        if (!panel) {
+          return;
+        }
+        toggle.addEventListener('click', function (event) {
+          event.stopPropagation();
+          var expanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!expanded));
+          panel.classList.toggle('is-open', !expanded);
+        });
+        document.addEventListener('click', function (event) {
+          if (!toggle.contains(event.target) && !panel.contains(event.target)) {
+            toggle.setAttribute('aria-expanded', 'false');
+            panel.classList.remove('is-open');
+          }
+        });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') {
+            toggle.setAttribute('aria-expanded', 'false');
+            panel.classList.remove('is-open');
+          }
+        });
+      });
+    }
+  };
+
+  // Content Hub Featured carousel (tablet/mobile): prev/next arrows just
+  // scroll the track by one item's width — the browser's own scroll-snap
+  // handles settling on the next card.
+  Drupal.behaviors.horizonFeaturedCarousel = {
+    attach: function (context) {
+      once('horizon-featured-carousel', '.js-featured-track', context).forEach(function (track) {
+        var wrap = track.closest('.content-hub-featured_mobile');
+        var prev = wrap.querySelector('.js-featured-prev');
+        var next = wrap.querySelector('.js-featured-next');
+        var item = track.querySelector('.content-hub-featured_mobile_item');
+        if (!prev || !next || !item) {
+          return;
+        }
+        var scrollByOne = function (direction) {
+          var amount = (item.getBoundingClientRect().width + 16) * direction;
+          track.scrollBy({ left: amount, behavior: 'smooth' });
+        };
+        prev.addEventListener('click', function () { scrollByOne(-1); });
+        next.addEventListener('click', function () { scrollByOne(1); });
+      });
+    }
+  };
+
+  // Content Hub Trending carousel: same idea as the Featured carousel,
+  // but there are two arrow pairs (one pinned left on desktop, one below
+  // on mobile/tablet — only one pair is visible at a time via CSS) that
+  // both need to drive the same track.
+  Drupal.behaviors.horizonTrendingCarousel = {
+    attach: function (context) {
+      once('horizon-trending-carousel', '.js-trending-track', context).forEach(function (track) {
+        var carousel = track.closest('.content-hub-trending_carousel');
+        var originalItems = Array.prototype.slice.call(track.querySelectorAll('.content-hub-trending_item'));
+        if (!carousel || !originalItems.length) {
+          return;
+        }
+
+        // Seamless infinite loop: clone the whole card set once before and
+        // once after the real cards, so the track never has to jump
+        // backward to card 1 — every click just keeps moving the same
+        // direction, forever. When the (identical, aria-hidden) clone set
+        // scrolls into view, the position is silently re-centered back
+        // into the real set by exactly one set's width; since the clone
+        // is pixel-identical to the real cards, that jump is invisible.
+        var cloneSet = function (before) {
+          var order = before ? originalItems.slice().reverse() : originalItems;
+          order.forEach(function (el) {
+            var clone = el.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.querySelectorAll('a, button').forEach(function (focusable) {
+              focusable.tabIndex = -1;
+            });
+            track.insertBefore(clone, before ? track.firstChild : null);
+          });
+        };
+        cloneSet(true);
+        cloneSet(false);
+
+        var step = originalItems[0].getBoundingClientRect().width + 16;
+        var setWidth = originalItems.length * step;
+        track.scrollTo({ left: setWidth, behavior: 'instant' });
+
+        var isAnimating = false;
+        var recenter = function () {
+          // Landed in the trailing clone (scrolled past the real set) or
+          // the leading clone (scrolled before it) — jump back by one set
+          // width with no animation ('instant' overrides the CSS
+          // scroll-behavior some tracks set), landing on the pixel-
+          // identical spot in the real set.
+          if (track.scrollLeft >= setWidth * 2) {
+            track.scrollTo({ left: track.scrollLeft - setWidth, behavior: 'instant' });
+          }
+          else if (track.scrollLeft < setWidth) {
+            track.scrollTo({ left: track.scrollLeft + setWidth, behavior: 'instant' });
+          }
+        };
+
+        var scrollByOne = function (direction) {
+          // Rapid repeat clicks used to race the in-flight smooth-scroll
+          // animation: reading track.scrollLeft mid-transition gave a
+          // stale value. Lock clicks out until the current scroll (and
+          // the recenter check after it) settles, so every click sees a
+          // true state.
+          if (isAnimating) {
+            return;
+          }
+          isAnimating = true;
+          track.scrollTo({ left: track.scrollLeft + step * direction, behavior: 'smooth' });
+          window.setTimeout(function () {
+            recenter();
+            isAnimating = false;
+          }, 500);
+        };
+        carousel.querySelectorAll('.js-trending-prev').forEach(function (btn) {
+          btn.addEventListener('click', function () { scrollByOne(-1); });
+        });
+        carousel.querySelectorAll('.js-trending-next').forEach(function (btn) {
+          btn.addEventListener('click', function () { scrollByOne(1); });
+        });
+      });
+    }
+  };
+
+  Drupal.behaviors.horizonSocialHighlights = {
+    attach: function (context) {
+      once('horizon-social-highlights', '.social-highlights_track', context).forEach(function (track) {
+        var carousel = track.closest('.social-highlights_carousel');
+        var originalSlides = Array.prototype.slice.call(track.querySelectorAll('.social-highlights_slide'));
+        var dotsWrap = carousel.querySelector('.social-highlights_dots');
+        var prevBtn = carousel.querySelector('.social-highlights_arrow--prev');
+        var nextBtn = carousel.querySelector('.social-highlights_arrow--next');
+        if (!originalSlides.length) {
+          return;
+        }
+
+        // Seamless infinite loop: clone the whole slide set once before
+        // and once after the real slides — same technique as the Content
+        // Hub Trending carousel (horizonTrendingCarousel above). Every
+        // click keeps moving the same direction forever; landing in a
+        // (identical, aria-hidden) clone set silently re-centers back
+        // into the real set by one set's width, invisibly.
+        var cloneSet = function (before) {
+          var order = before ? originalSlides.slice().reverse() : originalSlides;
+          order.forEach(function (el) {
+            var clone = el.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.querySelectorAll('a, button').forEach(function (focusable) {
+              focusable.tabIndex = -1;
+            });
+            track.insertBefore(clone, before ? track.firstChild : null);
+          });
+        };
+        cloneSet(true);
+        cloneSet(false);
+
+        // Slide width (and so setWidth) isn't fixed — .social-highlights_slide
+        // is narrower below 768px (see social-highlights.css) — so it's
+        // read live, not cached, and re-checked on resize.
+        var slideWidth = function () {
+          return originalSlides[0].getBoundingClientRect().width + 20;
+        };
+        var setWidth = function () {
+          return originalSlides.length * slideWidth();
+        };
+
+        track.scrollTo({ left: setWidth(), behavior: 'instant' });
+
+        var dots = [];
+
+        var buildDots = function () {
+          dotsWrap.innerHTML = '';
+          dots = [];
+          var count = originalSlides.length;
+          for (var i = 0; i < count; i++) {
+            var dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'dot';
+            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            (function (index) {
+              dot.addEventListener('click', function () {
+                track.scrollTo({ left: setWidth() + index * slideWidth(), behavior: 'smooth' });
+              });
+            })(i);
+            dotsWrap.appendChild(dot);
+            dots.push(dot);
+          }
+          updateActiveDot();
+        };
+
+        var updateActiveDot = function () {
+          var count = originalSlides.length;
+          var relative = track.scrollLeft - setWidth();
+          var index = Math.round(relative / slideWidth());
+          index = ((index % count) + count) % count;
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('is-active', i === index);
+          });
+          // Arrows never disable at the ends — this carousel loops
+          // infinitely, so there is no dead end for "prev"/"next" to reach.
+        };
+
+        var isAnimating = false;
+        var recenter = function () {
+          // Landed in the trailing clone or the leading clone — jump back
+          // by one set width with no animation ('instant' overrides the
+          // CSS scroll-behavior:smooth this track sets), landing on the
+          // pixel-identical spot in the real set.
+          if (track.scrollLeft >= setWidth() * 2) {
+            track.scrollTo({ left: track.scrollLeft - setWidth(), behavior: 'instant' });
+          }
+          else if (track.scrollLeft < setWidth()) {
+            track.scrollTo({ left: track.scrollLeft + setWidth(), behavior: 'instant' });
+          }
+        };
+
+        var scrollByOne = function (direction) {
+          if (isAnimating) {
+            return;
+          }
+          isAnimating = true;
+          track.scrollTo({ left: track.scrollLeft + slideWidth() * direction, behavior: 'smooth' });
+          window.setTimeout(function () {
+            recenter();
+            updateActiveDot();
+            isAnimating = false;
+          }, 500);
+        };
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', function () { scrollByOne(-1); });
+        }
+        if (nextBtn) {
+          nextBtn.addEventListener('click', function () { scrollByOne(1); });
+        }
+        track.addEventListener('scroll', function () {
+          window.requestAnimationFrame(updateActiveDot);
+        });
+        window.addEventListener('resize', function () {
+          // Slide width changes across the 768px breakpoint, which moves
+          // setWidth() too — re-anchor to the start of the real (middle)
+          // set under the new layout instead of leaving scrollLeft
+          // pointing at a now-wrong pixel offset.
+          track.scrollTo({ left: setWidth(), behavior: 'instant' });
+          buildDots();
+        });
+
+        buildDots();
+
+        // Play/pause toggle for video slides — videos autoplay by default
+        // (data-state="playing"); the button lets the viewer pause/resume
+        // without navigating the slide's link.
+        track.querySelectorAll('.js-social-play-toggle').forEach(function (toggle) {
+          var video = toggle.closest('.social-highlights_slide').querySelector('.js-social-video');
+          if (!video) {
+            return;
+          }
+          toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (video.paused) {
+              video.play();
+              toggle.setAttribute('data-state', 'playing');
+              toggle.setAttribute('aria-label', Drupal.t('Pause video'));
+            }
+            else {
+              video.pause();
+              toggle.setAttribute('data-state', 'paused');
+              toggle.setAttribute('aria-label', Drupal.t('Play video'));
+            }
+          });
+        });
+      });
+    }
+  };
+
 })(Drupal, once);

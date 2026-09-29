@@ -1,0 +1,246 @@
+/**
+ * Horizon theme: Content Hub Trending.
+ * Mirrors https://washington.org/visit-dc's "Trending" section — a
+ * scroll-snap carousel at EVERY breakpoint (not a grid like Content Hub
+ * Featured). Mobile/tablet: arrows centered below the track. Desktop
+ * (992px+): arrows move to a vertical stack pinned to the left edge,
+ * overlapping the first card, and more cards peek into view at once.
+ *
+ * Written standalone — no shared/base classes borrowed from
+ * Content Hub Featured, even though the two look related.
+ */
+.content-hub-trending {
+  --wdc-plum: #7d3269;
+
+  padding-top: 48px;
+  padding-bottom: 48px;
+  scroll-margin-top: 100px;
+  overflow: hidden;
+}
+
+.content-hub-trending_heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.content-hub-trending_heading__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.content-hub-trending_heading__title .icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.content-hub-trending_heading__title .label {
+  margin: 0;
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.31;
+  color: var(--horizon-heading);
+}
+
+.content-hub-trending .btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border: 2px solid var(--wdc-plum);
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--wdc-plum);
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.content-hub-trending .btn:hover {
+  background-color: var(--wdc-plum);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@media (min-width: 992px) {
+  .content-hub-trending_heading {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .content-hub-trending_heading__title {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .content-hub-trending_heading__title .icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ---- Carousel shell ---- */
+.content-hub-trending_carousel {
+  position: relative;
+}
+
+.content-hub-trending_track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.content-hub-trending_track::-webkit-scrollbar {
+  display: none;
+}
+
+.content-hub-trending_item {
+  flex: 0 0 360px;
+  width: 360px;
+  scroll-snap-align: start;
+}
+
+/* Arrows below the track — default (mobile/tablet) position. */
+.content-hub-trending_arrows--below {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.content-hub-trending_arrows--start {
+  display: none;
+}
+
+.content-hub-trending_arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--wdc-plum);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--wdc-plum);
+  cursor: pointer;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.content-hub-trending_arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.content-hub-trending_arrow:hover {
+  background-color: var(--wdc-plum);
+  color: #ffffff;
+}
+
+/* Desktop: arrows pinned to the left edge, stacked vertically, floating
+ * over the top of the first card — the "below" pair is hidden instead. */
+@media (min-width: 992px) {
+  .content-hub-trending_arrows--below {
+    display: none;
+  }
+
+  .content-hub-trending_arrows--start {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    position: absolute;
+    left: calc(var(--gutter) + 8px);
+    top: 100px;
+    z-index: 5;
+  }
+}
+
+/* ---- Card ---- */
+.content-hub-trending-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-hub-trending-card img.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.61 / 1;
+  object-fit: cover;
+}
+
+/* The body box "lifts" over the image instead of sitting flush below it —
+ * pulled up with a negative margin and inset from the right edge so a
+ * sliver of the image peeks out behind it, matching the reference exactly
+ * (measured off a real card screenshot: white box overlapping the
+ * image's bottom, narrower than the image, not full-width). */
+.content-hub-trending-card_body {
+  position: relative;
+  z-index: 1;
+  margin-top: -32px;
+  margin-right: 24px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 10, 0.05), 0 20px 20px -10px rgba(0, 0, 10, 0.1);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 16px;
+}
+
+.content-hub-trending-card_body .label {
+  margin: 0;
+  font-family: "Poppins", var(--horizon-nav-font), sans-serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.22;
+  color: var(--horizon-heading);
+}
+
+@media (min-width: 768px) {
+  .content-hub-trending-card_body .label {
+    font-size: 30px;
+    line-height: 1.33;
+  }
+}
+
+.content-hub-trending-card_body .wdc-paragraph {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgb(77, 77, 77);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .content-hub-trending-card_body .wdc-paragraph {
+    font-size: 21px;
+  }
+}
+
+.content-hub-trending-card_body .btn {
+  align-self: flex-start;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}

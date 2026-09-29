@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Theme override for a single "Filter By Articles" card.
+ *
+ * This wrapper only extracts the row's field values and hands them to the
+ * presentational component
+ * (templates/components/filter-by-articles-card/filter-by-articles-card.html.twig)
+ * — the same component Storybook renders in isolation via that folder's
+ * filter-by-articles-card.stories.twig, with mock data instead of a real row.
+ */
+#}
+{% set node = row._entity %}
+{% set image_entity = node.field_image.entity %}
+
+{% include '@horizon_theme/components/02-molecules/filter-by-articles-card/filter-by-articles-card.html.twig' with {
+  image_url: image_entity ? file_url(image_entity.field_media_image.entity.uri.value) : '',
+  image_alt: image_entity ? image_entity.field_media_image.0.alt : '',
+  title: node.label(),
+  description: node.field_description.value,
+  url: path('entity.node.canonical', {'node': node.id}),
+  link_title: 'Read More'|t,
+} only %}
